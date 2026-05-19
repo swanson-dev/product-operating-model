@@ -65,6 +65,14 @@ For each rule in the (possibly filtered) ruleset, perform the check against `$TA
 - **R3.8** (ERROR): PB files match `PB-YYYY-MM-<slug>.md`.
 - **R3.9** (ERROR): Each pod directory (excluding `_template`) has `pod.md`.
 - **R3.10** (WARN): Pod composition (member count from pod.md table) is between 2-7.
+- **R3.11** (ERROR): For each file in `products/*/discovery-backlog/` matching the glob `*.council-*.md`:
+  - Verify filename matches `^<disc-slug>\.council-\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}Z(-\d+)?\.md$` where `<disc-slug>` is the lowercased filename of an actual DISC sibling (e.g. `disc-2026-05-foo` for `DISC-2026-05-foo.md`). If the slug prefix does not match any sibling DISC file, ERROR with rule R3.11 and message `"Council file <path> has no matching DISC sibling"`.
+  - Parse frontmatter. Verify required keys: `id`, `disc`, `ran_at`, `roles`, `synthesizer`, `overlay`, `tensions_flagged`, `low_confidence_count`. For each missing key, ERROR with rule R3.11 and message `"Council file <path> missing required frontmatter: <key>"`.
+  - Verify `disc` field value matches the actual sibling DISC's `id` frontmatter. If not, ERROR with `"Council file <path> disc field '<value>' does not match sibling DISC id '<actual>'"`.
+- **R3.12** (WARN): For each DISC file in `products/*/discovery-backlog/` whose Promotion Readiness table shows 4/4 ✅:
+  - Glob the same directory for `<disc-slug>.council-*.md` files.
+  - If zero matches, WARN with rule R3.12 and message `"DISC <DISC-ID> promoted to 4/4 ✅ without any Council run; consider /pom-council before promotion"`. The DISC file path goes in the finding's `location` field.
+  - Determining 4/4 ✅ uses the same Promotion Readiness parse logic that R7.4 already uses. Do not duplicate logic — reference the existing helper.
 
 ### R4 — Runway
 - **R4.1** (ERROR): ADR files match `ADR-NNNN-<slug>.md`.
