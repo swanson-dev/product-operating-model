@@ -15,7 +15,7 @@ Modelled on the Marty Cagan / Voyager / SVPG product operating model literature,
 ## Quick install
 
 ```text
-/plugin marketplace add swansoncreativestudios/product-operating-model
+/plugin marketplace add swanson-dev/product-operating-model
 /plugin install pom-core@product-operating-model
 ```
 
@@ -113,7 +113,7 @@ Each plugin is independently installable. Each has its own `.claude-plugin/plugi
 This is the source repo. If you're contributing or working on the marketplace itself:
 
 ```bash
-git clone https://github.com/swansoncreativestudios/product-operating-model
+git clone https://github.com/swanson-dev/product-operating-model
 cd product-operating-model
 
 # Install locally for live testing

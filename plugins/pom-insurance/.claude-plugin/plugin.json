@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "description": "Insurance industry overlay for the Product Operating Model. Layers regulatory Q4 framing (NAIC, state DOIs), actuarial/state-filing starter standards, and an insurance-calibrated WSJF rubric on top of pom-core. Requires pom-core.",
   "author": { "name": "Josh Swanson", "email": "swansoncreativestudios@gmail.com" },
-  "homepage": "https://github.com/swansoncreativestudios/product-operating-model",
-  "repository": { "type": "git", "url": "https://github.com/swansoncreativestudios/product-operating-model.git", "directory": "plugins/pom-insurance" },
+  "homepage": "https://github.com/swanson-dev/product-operating-model",
+  "repository": "https://github.com/swanson-dev/product-operating-model.git",
   "license": "MIT",
   "keywords": ["pom", "insurance", "naic", "regulatory", "actuarial", "compliance"]
 }

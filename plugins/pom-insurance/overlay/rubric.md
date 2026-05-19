@@ -2,7 +2,24 @@
 
 Calibrated for insurance carriers (life, P&C, health) operating in regulated markets. Derived from Voyager (Protective Life) v1.0 calibration. **Re-calibrate after 10 use cases.**
 
-For formula, scale, and rules, see [`../references/wsjf-formula.md`](../references/wsjf-formula.md).
+## The formula
+
+```
+WSJF = Cost of Delay ÷ Job Size
+
+Cost of Delay = User-Business Value
+              + Time Criticality
+              + Risk Reduction & Opportunity Enablement
+```
+
+Each component is scored on a **modified Fibonacci scale**: `1, 2, 3, 5, 8, 13, 21`.
+
+**Rules:**
+- Job Size = 21 is hard-prohibited — split first.
+- Re-calibrate the rubric after 10 use cases.
+- Score at least 3 use cases together; relative ordering is what matters.
+
+For deeper rationale and recalibration triggers, see [`../references/wsjf-formula.md`](../references/wsjf-formula.md) (if your bootstrap created an `intake/references/` directory).
 
 ---
 

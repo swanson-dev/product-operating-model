@@ -31,7 +31,14 @@ Install the retail overlay into an existing POM repo.
 <process>
 
 <step name="pre_flight">
-Resolve `<pom-repo-path>`; verify POM repo. Abort if not.
+Resolve `<pom-repo-path>` (required positional argument).
+
+Verify POM repo using the **Glob tool** for each required directory (do NOT use Bash conditionals — Bash on Windows runs Git Bash POSIX and PowerShell `Test-Path { }` syntax will fail). Glob:
+- `<pom-repo-path>/intake/`
+- `<pom-repo-path>/products/`
+- `<pom-repo-path>/methodology/`
+
+If any does not match, abort with `Not a POM repo. Run /pom-bootstrap first.`
 </step>
 
 <step name="run_interview">

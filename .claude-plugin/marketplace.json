@@ -7,11 +7,10 @@
     "name": "Josh Swanson",
     "email": "swansoncreativestudios@gmail.com"
   },
-  "pluginRoot": "./plugins",
   "plugins": [
     {
       "name": "pom-core",
-      "source": "./pom-core",
+      "source": "./plugins/pom-core",
       "description": "Operate a Product Operating Model portfolio: ingest, score (WSJF), gate (4-question), route, promote, validate. Ships with the generic industry baseline.",
       "version": "0.1.0",
       "category": "productivity",
@@ -20,7 +19,7 @@
     },
     {
       "name": "pom-insurance",
-      "source": "./pom-insurance",
+      "source": "./plugins/pom-insurance",
       "description": "Insurance overlay for POM: rubric, regulatory Q4 framing, starter enabling standards (state filing, actuarial review).",
       "version": "0.1.0",
       "category": "productivity",
@@ -29,7 +28,7 @@
     },
     {
       "name": "pom-fintech",
-      "source": "./pom-fintech",
+      "source": "./plugins/pom-fintech",
       "description": "Fintech overlay for POM: rubric, consumer-protection Q4 framing, PCI/KYC starter enabling standards.",
       "version": "0.1.0",
       "category": "productivity",
@@ -38,7 +37,7 @@
     },
     {
       "name": "pom-healthcare",
-      "source": "./pom-healthcare",
+      "source": "./plugins/pom-healthcare",
       "description": "Healthcare overlay for POM: rubric, HIPAA/clinical-safety Q4 framing, PHI/interoperability starter enabling standards.",
       "version": "0.1.0",
       "category": "productivity",
@@ -47,7 +46,7 @@
     },
     {
       "name": "pom-retail",
-      "source": "./pom-retail",
+      "source": "./plugins/pom-retail",
       "description": "Retail overlay for POM: rubric, PCI/accessibility Q4 framing, omnichannel starter enabling standards.",
       "version": "0.1.0",
       "category": "productivity",

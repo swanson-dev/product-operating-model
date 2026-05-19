@@ -32,8 +32,12 @@ Install the insurance overlay shipped with this plugin into an existing POM repo
 
 <step name="pre_flight">
 1. Resolve `<pom-repo-path>` (required positional arg). Abort if not provided.
-2. Verify the path exists and looks like a POM repo (`intake/`, `products/`, `methodology/`). Abort with `Not a POM repo. Run /pom-bootstrap first.` if not.
-3. Note whether the generic baseline is currently installed (`intake/scoring/wsjf-rubric.md` exists; `methodology/generic/` may also be present if bootstrap copied it).
+2. Verify the path looks like a POM repo using the **Glob tool** for each required directory (do NOT use Bash conditionals — Bash on Windows runs Git Bash POSIX and PowerShell-style `Test-Path { }` syntax will fail). Glob:
+   - `<pom-repo-path>/intake/`
+   - `<pom-repo-path>/products/`
+   - `<pom-repo-path>/methodology/`
+   If any does not match, abort with `Not a POM repo. Run /pom-bootstrap first.`
+3. Note whether the generic baseline is currently installed (`intake/scoring/wsjf-rubric.md` exists; `methodology/generic/` may also be present if bootstrap copied it) — check via Glob, same reason.
 </step>
 
 <step name="run_interview">
