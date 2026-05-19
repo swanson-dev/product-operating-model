@@ -28,6 +28,8 @@ Record an Architecture Decision Record in a product's runway. Sequential numberi
 - `products/<product>/runway/runway-plan.md` "Recent decisions" table (if runway-plan exists)
 - The superseded ADR's Status field only (content preserved) if `--supersedes` provided
 
+**Emits** a paste-ready decision summary in the CLI report — one paragraph for Teams/email/PR comments naming the chosen option, rationale, and top trade-off.
+
 **Refuses** to skip considered options, skip negative consequences, or modify a prior ADR's content.
 
 **After this command:**

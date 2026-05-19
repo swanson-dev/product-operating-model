@@ -19,11 +19,13 @@
 - Appends a shaping log entry: "Promoted to product-backlog/PB-..."
 - Updates `products/README.md` portfolio index (Product Backlog count).
 - Reports: PB file path; suggests `pom-form-pod` if no pod exists yet, or that an existing pod can now pull.
+- **Paste-ready vertical slice summary** in the CLI report, framed by dashed lines, stating outcome + slice description.
 
 **Pressure points:**
 - If skill promotes a 3/4 ✅ item → CATASTROPHIC FAIL (gate is the load-bearing rule)
 - If skill writes PB without a vertical slice definition → FAIL
 - If skill doesn't update the DISC file's status → FAIL (cross-reference R7.4)
+- If skill omits the paste-ready vertical slice summary → FAIL (v0.2 requirement)
 
 ---
 

@@ -73,6 +73,16 @@ If runway-plan.md does NOT exist:
 - Note in the report that the user should run `pom-runway-plan $PRODUCT_SLUG` to create it.
 </step>
 
+<step name="draft_stakeholder_summary">
+Generate a draft **stakeholder-facing summary** (one paragraph any reader can paste):
+- State the decision in plain English (chosen option) and what it replaces, if anything.
+- Give the one-line rationale (the dominant decision driver).
+- Name the most important positive consequence and the most important trade-off / negative consequence.
+- If superseding: explicitly note the prior ADR being superseded and why.
+
+Show the draft via chat and use `AskUserQuestion` to confirm or refine.
+</step>
+
 <step name="report">
 ```
 ✅ ADR-$ADR_NUMBER recorded.
@@ -86,6 +96,11 @@ Files:
 
 Decision: {{title}}
 Chosen: {{chosen option}}
+
+Decision summary (paste-ready):
+─────────────────────────────────
+{{stakeholder-facing summary}}
+─────────────────────────────────
 
 Next steps:
 {{If runway-plan doesn't exist:}}
@@ -111,5 +126,6 @@ Next steps:
 - [ ] All template sections filled
 - [ ] If supersession, prior ADR Status updated (content unchanged)
 - [ ] runway-plan.md reflects the new ADR (if it exists)
+- [ ] Stakeholder-facing decision summary is paste-ready in the CLI report
 - [ ] `pom-validate` continues to pass (R4.1, R4.2)
 </success_criteria>

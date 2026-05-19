@@ -3,6 +3,14 @@
 All notable changes to the **product-operating-model** marketplace are recorded here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follow [SemVer](https://semver.org/).
 
+## [Unreleased] — v0.2 in progress
+
+### Added
+- **Paste-ready stakeholder summary in every artifact-producing skill.** `pom-discovery-gate`, `pom-runway-add-adr`, and `pom-decision-log` now generate a dashed-line-framed paragraph in the CLI report — matching the existing pattern in `pom-disposition` and `pom-promote-to-backlog`. The block is for Teams/email/PR comments; it lives only in the report, never in the artifact file. Test contracts (`*.test.md`) updated with the assertion in each affected scenario.
+
+### Rationale
+v0.1.0 produced well-structured immutable artifacts but provided no canonical way to communicate each decision back to stakeholders — leaders had to re-summarize from the markdown. The paste-ready block closes that gap with zero new state and zero validator changes.
+
 ## [0.1.0] — 2026-05-18
 
 Initial release.
