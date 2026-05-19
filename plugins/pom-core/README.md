@@ -50,6 +50,7 @@ All skills are directly invocable (`/<skill-name> <args>`).
 | `pom-disposition` | Record kill/park/route/split for a scored UC. Append-only | Yes (intake/dispositions/) |
 | `pom-route-to-discovery` | Land a routed UC in a product's Discovery Backlog | Yes (products/<x>/discovery-backlog/) |
 | `pom-discovery-gate` | Walk a Discovery item through the four-question gate | Yes (DISC shaping log append) |
+| `pom-council` | Run PM/PD/TL (optionally SM/PO) in parallel against a draft DISC; synthesise tensions; write a Council file. Strictly consultative — produces no verdict, gates nothing | Yes (products/<x>/discovery-backlog/`*.council-*.md`) |
 | `pom-promote-to-backlog` | Promote a 4/4 ✅ DISC to the Product Backlog | Yes (products/<x>/product-backlog/) |
 | `pom-spinup-product` | Stand up a new product from `products/_template/` | Yes (products/<x>/) |
 | `pom-form-pod` | Stand up a pod with 2-7 composition rule enforced | Yes (products/<x>/pods/<pod>/) |
@@ -69,13 +70,14 @@ All skills are directly invocable (`/<skill-name> <args>`).
 
 Agents are invoked by skills and commands; you don't usually call them directly.
 
-### Workflow agents (3) — heavy lifting, protect main context
+### Workflow agents (4) — heavy lifting, protect main context
 
 | Agent | What it does |
 |---|---|
 | `pom-uc-researcher` | Converts a raw stakeholder source (PDF/deck/transcript) into a structured pre-UC dossier. Read-only. |
 | `pom-wsjf-scorer` | Proposes WSJF scores from a dossier + rubric, with cited anchors and confidence levels. Does NOT write. |
 | `pom-validator` | Runs the full validation ruleset in isolation; returns compact JSON findings. |
+| `pom-council-synthesizer` | Synthesises pom-council role outputs into a tension narrative. Amplifies disagreements; forbidden from producing verdicts. Invoked only by pom-council. |
 
 ### Role agent (1) — Trio / pod-leadership framing
 
