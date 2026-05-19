@@ -3,6 +3,16 @@
 All notable changes to the **product-operating-model** marketplace are recorded here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follow [SemVer](https://semver.org/).
 
+## [Unreleased] — v0.3 in progress
+
+### Added
+- **`/pom-council` skill — parallel multi-role consultation on draft Discovery items.** Dispatches `pom-trio` for each role (default: PM/PD/TL; opt-in to add SM/PO via `--roles=all` or explicit list) in parallel, all under the new `council_mode: true` input contract that returns structured JSON (per-question confidence high/medium/low + ≤750-char rationale + optional open question). Then dispatches the new `pom-council-synthesizer` agent, which is guardrailed against softening disagreements and forbidden from emitting verdict tokens (✅/🟡/❌/"should promote"/etc.). Output is a single timestamped markdown file `<disc-slug>.council-<ISO-ts>.md` co-located with the parent DISC, containing a Tension Map table (per-question role confidences side-by-side, outlier auto-bolded), synthesis prose, per-role detail in canonical order, and a paste-ready stakeholder block. Multiple runs stacked append-only; the orchestrator handles same-second collisions by appending `-2`, `-3` to the timestamp suffix. Strictly consultative — Council never grades, gates, or emits work-item-shaped artifacts. Test contract in `tests/council.test.md` (15 scenarios) plus the spec at `docs/superpowers/specs/2026-05-19-pom-council-design.md`.
+- **Validator R3.11 (ERROR) and R3.12 (WARN).** R3.11 enforces Council filename pattern + required frontmatter (`id`, `disc`, `ran_at`, `roles`, `synthesizer`, `overlay`, `tensions_flagged`, `low_confidence_count`); R3.12 emits a WARN when a 4/4 ✅ DISC has zero Council siblings, nudging trios toward Council without blocking promotion. Ruleset bumped from v0.1.0 to v0.2.0. Test contract extended in `tests/validate.test.md`.
+- **`pom-trio` agent council mode.** Adds a `council_mode: true` input flag that switches the agent from markdown review output to structured JSON suitable for the Council orchestrator. Existing markdown-review behaviour is unchanged for callers that do not set the flag.
+
+### Rationale
+v0.2 closed the visibility loop (cockpit, paste-ready blocks, ADO sync). v0.3 closes the **decision-quality** loop. Trio meetings today are "read the DISC out loud → react"; Council pre-stages cross-role disagreements so meetings start where the friction actually is. The strictly-consultative posture protects existing gate authority — `/pom-discovery-gate` remains the sole grader, and `/pom-promote-to-backlog` remains the sole promoter.
+
 ## [Unreleased] — v0.2 in progress
 
 ### Added

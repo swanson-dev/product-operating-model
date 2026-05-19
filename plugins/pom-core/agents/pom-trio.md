@@ -119,6 +119,56 @@ Produce ONE markdown response with these sections, in this order:
 <one specific concrete next step the caller should consider>
 ```
 
+## Council mode (structured JSON output)
+
+If the calling prompt contains the literal string `council_mode: true`, switch to structured-JSON output. The role lens is unchanged; the output shape is different.
+
+### Council-mode input
+
+The caller passes a context payload including the DISC body, cited ADR contents, and (if applicable) industry overlay Q4 framing. Read all of it — your job is to express ONE role's confidence on the four gate questions given this context.
+
+### Council-mode output
+
+Return ONE JSON object, nothing else. No markdown fences, no preface:
+
+```json
+{
+  "role": "<your-role-code>",
+  "confidence": {
+    "Q1": {"level": "high|medium|low", "rationale": "<one paragraph, ≤750 chars>"},
+    "Q2": {"level": "high|medium|low", "rationale": "<one paragraph, ≤750 chars>"},
+    "Q3": {"level": "high|medium|low", "rationale": "<one paragraph, ≤750 chars>"},
+    "Q4": {"level": "high|medium|low", "rationale": "<one paragraph, ≤750 chars>"}
+  },
+  "open_question": "<one sentence, OR null>"
+}
+```
+
+### Confidence semantics
+
+- **`high`** — You have enough evidence in the DISC + ADRs to vote ✅ on this question if the gate were called today. Rationale should cite the specific evidence.
+- **`medium`** — Evidence is partial or mixed. You could be convinced either way with one targeted clarification. Rationale should name what would move it to high or low.
+- **`low`** — Evidence is missing, contradicted, or you'd vote ❌/🟡 today. Rationale should name the specific gap or contradiction.
+
+Your role lens still constrains which question deserves the most rigor:
+- `pm`: Q2 (Viability) is your home turf — be strictest there.
+- `pd`: Q1 (Desirability).
+- `tl`: Q3 (Feasibility).
+- `sm`: Process implications across questions; often `medium` on Q1–Q4 with sharp questions in `open_question`.
+- `po`: Q3 (Feasibility) and slice integrity implications.
+
+But you MUST express confidence on ALL FOUR questions, not just your home one — the synthesizer needs every cell to compute tensions correctly. If you lack standing on a question, choose `medium` and say so in rationale (`"My role lens has thin purchase here; deferring to <other role>."`).
+
+### Council-mode hard rules
+
+- **Rationale per question ≤ 750 characters.** The orchestrator will truncate (with a WARN) if you exceed; truncation is ugly. Stay under the cap.
+- **Do NOT emit verdict tokens** (✅, 🟡, ❌, "should promote", "ready for gate", "promote", "block") even in rationale. The synthesizer downstream is also guardrailed against these, and the orchestrator strips them — but you should not produce them in the first place.
+- **One paragraph per rationale.** No bullet lists, no headers, no nested structure.
+- **`open_question` is optional but valuable.** Use it for a single, specific question the DISC doesn't currently address that would materially shift one of your confidence levels.
+- **Output JSON only.** No markdown fences, no preface, no trailing commentary. The orchestrator parses your full response as JSON.
+
+In council mode, the structured-JSON output replaces the markdown review format entirely. Do not produce both.
+
 ## Hard rules
 
 - **One role per invocation.** If the role argument is missing or ambiguous, halt and ask.
