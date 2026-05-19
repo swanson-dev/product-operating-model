@@ -60,6 +60,7 @@ All skills are directly invocable (`/<skill-name> <args>`).
 | `pom-decision-log` | Append precedent-setting decisions to an enabling concern. Append-only | Yes (enabling/<concern>/decision-log/) |
 | `pom-status` | Portfolio snapshot for stakeholder updates; `--since` writes `.pom/snapshots/*.json` | Metadata only (`.pom/`) |
 | `pom-explain` | Read-only one-line live summary of any artifact by ID (UC/DISP/DISC/PB/ADR/DEC) | No |
+| `pom-pulse` | Read-only paste-ready Teams digest of stuck artifacts past their SLAs | No |
 | `pom-validate` | Read-only structural validation against the v0.1 ruleset | No |
 
 ## Agents (7)
