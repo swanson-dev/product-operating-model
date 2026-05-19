@@ -1,0 +1,10 @@
+{
+  "name": "pom-retail",
+  "version": "0.1.0",
+  "description": "Retail / e-commerce industry overlay for the Product Operating Model. Layers PCI/accessibility Q4 framing, omnichannel/inventory starter standards, and a retail-calibrated WSJF rubric on top of pom-core. Requires pom-core.",
+  "author": { "name": "Josh Swanson", "email": "swansoncreativestudios@gmail.com" },
+  "homepage": "https://github.com/swansoncreativestudios/product-operating-model",
+  "repository": { "type": "git", "url": "https://github.com/swansoncreativestudios/product-operating-model.git", "directory": "plugins/pom-retail" },
+  "license": "MIT",
+  "keywords": ["pom", "retail", "ecommerce", "omnichannel", "pci", "accessibility", "fulfillment"]
+}
