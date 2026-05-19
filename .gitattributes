@@ -1,0 +1,7 @@
+# Force LF line endings inside the repo; checkout converts on Windows if needed.
+* text=auto eol=lf
+
+# Binary file types (none expected, but safe defaults)
+*.png binary
+*.jpg binary
+*.gif binary
