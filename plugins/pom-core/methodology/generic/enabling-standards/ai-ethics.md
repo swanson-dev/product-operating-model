@@ -14,7 +14,7 @@ It does **not** cover analytics, dashboards, or rule-based automation that conta
 ## Baseline rules
 
 ### A1 — Model card required
-Every model used in production has a model card recorded at `products/<product>/runway/model-cards/MC-<slug>.md`. The template at `methodology/templates/enabling/ai-ethics/model-card-template.md` defines the required fields. New deployment without a model card is blocked at the Discovery gate (Q4 ❌, G6).
+Every model used in production has a model card recorded at `products/<product>/runway/model-cards/MC-<slug>.md`. The template at `methodology/templates/enabling-standards/ai-ethics/model-card-template.md` defines the required fields. New deployment without a model card is blocked at the Discovery gate (Q4 ❌, G6).
 
 ### A2 — Bias audit before launch
 For any model that influences a decision about a person, a bias audit runs against the deployed model before launch. Strata to include at minimum: any protected demographic the portfolio is aware of, plus any segment material to the product (e.g., user tenure, geographic region, account size).
@@ -46,7 +46,7 @@ The `pom-ethics-reviewer` agent and the `pom-discovery-gate` skill both read thi
 
 ## See also
 
-- `methodology/templates/enabling/ai-ethics/model-card-template.md`
-- `methodology/templates/enabling/ai-ethics/bias-audit-framework.md`
-- `methodology/templates/enabling/ai-ethics/pii-handling.md`
+- `methodology/templates/enabling-standards/ai-ethics/model-card-template.md`
+- `methodology/templates/enabling-standards/ai-ethics/bias-audit-framework.md`
+- `methodology/templates/enabling-standards/ai-ethics/pii-handling.md`
 - `methodology/generic/discovery-q4-framing.md` — how Q4 reads this standard

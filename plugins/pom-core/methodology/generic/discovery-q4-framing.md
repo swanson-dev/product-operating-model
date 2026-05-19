@@ -63,6 +63,6 @@ If G6, G7, or G8 requires deviating from an existing enabling standard (e.g., th
 ## See also
 
 - `methodology/references/four-question-gate.md` — full gate rubric and rationale
-- `methodology/templates/enabling/ai-ethics/` — canonical AI-ethics scaffolding (model card, bias audit, PII handling)
+- `methodology/templates/enabling-standards/ai-ethics/` — canonical AI-ethics scaffolding (model card, bias audit, PII handling)
 - `pom-ethics-reviewer` agent — independent audit of a Q4 answer
 - Industry overlay packs (`pom-<industry>`) for regulatory and domain-specific sub-questions

@@ -9,7 +9,7 @@ The technical foundation that must exist **ahead of** pod work so vertical slice
 | **ADR** | `ADR-NNNN-<slug>.md` | A single binding decision: context, options, decision, consequences. Numbered sequentially; immutable. |
 | **Pattern** | `PATTERN-<slug>.md` | A reusable design pattern documented for the product's pods. |
 | **Runway Plan** | `runway-plan.md` | Living document listing current ADRs, patterns, capacity assumptions, runway investments. |
-| **Model Cards** | `model-cards/MC-<slug>.md` | For AI/ML use cases — see `the pom-core plugin's methodology/templates/enabling/ai-ethics/model-card-template.md`. |
+| **Model Cards** | `model-cards/MC-<slug>.md` | For AI/ML use cases — see `the pom-core plugin's methodology/templates/enabling-standards/ai-ethics/model-card-template.md`. |
 
 ## Ownership
 

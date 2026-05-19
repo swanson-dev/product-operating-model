@@ -43,7 +43,7 @@ Append a precedent-setting decision to an enabling concern's `decision-log/`. Us
 <execution_context>
 @${CLAUDE_PLUGIN_ROOT}/methodology/workflows/decision-log.md
 @${CLAUDE_PLUGIN_ROOT}/methodology/references/validation-rules.md
-@${CLAUDE_PLUGIN_ROOT}/methodology/templates/enabling/ai-ethics/decision-log/README.md
+@${CLAUDE_PLUGIN_ROOT}/methodology/templates/enabling-standards/ai-ethics/decision-log/README.md
 </execution_context>
 
 <process>

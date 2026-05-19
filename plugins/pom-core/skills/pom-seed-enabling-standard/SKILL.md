@@ -40,7 +40,7 @@ Bootstrap a new enabling concern (Layer 3 standard) in a POM repo with v0.1 scaf
 @${CLAUDE_PLUGIN_ROOT}/methodology/workflows/seed-enabling-standard.md
 @${CLAUDE_PLUGIN_ROOT}/methodology/references/validation-rules.md
 @${CLAUDE_PLUGIN_ROOT}/methodology/templates/enabling/README.md
-@${CLAUDE_PLUGIN_ROOT}/methodology/templates/enabling/ai-ethics/README.md
+@${CLAUDE_PLUGIN_ROOT}/methodology/templates/enabling-standards/ai-ethics/README.md
 </execution_context>
 
 <process>

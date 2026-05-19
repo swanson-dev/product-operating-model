@@ -13,7 +13,7 @@ The expectation is that the standard owner reviews the starter, customises it to
 
 | File | Concern | Bootstrap target | When to install |
 |------|---------|------------------|-----------------|
-| `ai-ethics.md` | AI ethics | `enabling/ai-ethics/README.md` | Any portfolio building anything ML-adjacent. Pairs with the richer scaffold in `methodology/templates/enabling/ai-ethics/`. |
+| `ai-ethics.md` | AI ethics | `enabling/ai-ethics/README.md` | Any portfolio building anything ML-adjacent. Pairs with the richer scaffold in `methodology/templates/enabling-standards/ai-ethics/`. |
 | `security-baseline.md` | Security | `enabling/security/README.md` | Always — every portfolio handles data of some kind. |
 | `accessibility-baseline.md` | Accessibility | `enabling/accessibility/README.md` | Any portfolio with a user interface (web, mobile, internal tools). |
 | `data-quality.md` | Data quality | `enabling/data-quality/README.md` | Any portfolio with reporting, analytics, ML, or data exchange with other systems. |
@@ -24,7 +24,7 @@ Industry plugins (`pom-insurance`, `pom-fintech`, `pom-healthcare`, `pom-retail`
 
 ## See also
 
-- `methodology/templates/enabling/` — the canonical scaffold (heavier, fully fleshed for ai-ethics)
+- `methodology/templates/enabling-standards/` — the canonical scaffold (heavier, fully fleshed for ai-ethics). Lives in its own namespace so `pom-bootstrap` cannot accidentally copy it; only `pom-seed-enabling-standard` reads from here.
 - `methodology/references/four-question-gate.md` — explains how Q4 reads enabling standards
 - `pom-seed-enabling-standard` — skill that lays a new enabling concern into a user's POM repo
 - `pom-decision-log` — append-only log for precedent-setting decisions on each concern

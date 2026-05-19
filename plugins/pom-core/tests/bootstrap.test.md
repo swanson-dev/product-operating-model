@@ -79,6 +79,36 @@ Pressure scenarios that `pom-bootstrap` must handle correctly.
 
 ---
 
+## Scenario E: no enabling concerns are auto-seeded
+
+**Setup:** Empty directory at `/tmp/pom-test-bootstrap-E/`.
+
+**Invocation:** `/pom-bootstrap /tmp/pom-test-bootstrap-E --rubric=generic`
+
+**Expected outcome:** After scaffold, `enabling/` contains **exactly one entry**: `README.md`. No subdirectories, no concern-specific files.
+
+Concretely, the directory listing of `/tmp/pom-test-bootstrap-E/enabling/` is:
+
+```
+README.md
+```
+
+The following MUST NOT exist after bootstrap:
+- `enabling/ai-ethics/` (or any other concern directory)
+- `enabling/ai-ethics/README.md`
+- `enabling/ai-ethics/model-card-template.md`
+- `enabling/ai-ethics/pii-handling.md`
+- `enabling/ai-ethics/bias-audit-framework.md`
+- `enabling/ai-ethics/decision-log/`
+
+**Pressure points:**
+- If skill `cp -r`s the entire `methodology/templates/enabling/` tree (or any analog) into the target, a partial `ai-ethics/` scaffold leaks into a portfolio that never opted into AI ethics standards → FAIL. This violates the explicit guardrail at [workflows/bootstrap.md](../methodology/workflows/bootstrap.md): "Do NOT seed any enabling concerns automatically (not even ai-ethics) — that's `pom-seed-enabling-standard`'s job."
+- If any subdirectory appears under `enabling/` post-bootstrap → FAIL. The only sanctioned way for `enabling/<concern>/` to come into existence is via `/pom-seed-enabling-standard --concern=<slug>`, where the user explicitly opts in and picks a calibration version.
+
+**Why this scenario exists:** v0.4 moved `methodology/templates/enabling/ai-ethics/` to `methodology/templates/enabling-standards/ai-ethics/` precisely so a naive `cp -r templates/enabling/` cannot leak concern scaffolds. This scenario locks that contract.
+
+---
+
 ## Reference comparison
 
 Scenario A's output should diff cleanly against `e:\Projects\Protective\voyager\`. Only differences should be:

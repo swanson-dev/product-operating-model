@@ -8,7 +8,7 @@
 
 **Expected outcome:**
 - `enabling/ai-ethics/` created with:
-  - `README.md` (matches `the pom-core plugin's methodology/templates/enabling/ai-ethics/README.md`)
+  - `README.md` (matches `the pom-core plugin's methodology/templates/enabling-standards/ai-ethics/README.md`)
   - `model-card-template.md`
   - `pii-handling.md`
   - `bias-audit-framework.md`
@@ -33,7 +33,7 @@
 
 ## Scenario C: concern with no template (e.g., `--concern=accessibility`)
 
-**Setup:** A POM repo. Phase 1 has only `ai-ethics/` templates in `the pom-core plugin's methodology/templates/enabling/`.
+**Setup:** A POM repo. Phase 1 has only `ai-ethics/` templates in `the pom-core plugin's methodology/templates/enabling-standards/`.
 
 **Invocation:** `/pom-seed-enabling-standard --concern=accessibility`
 

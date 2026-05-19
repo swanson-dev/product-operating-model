@@ -56,4 +56,4 @@
 
 ## Reference comparison
 
-The decision file format must follow `enabling/<concern>/decision-log/README.md` (which itself comes from `the pom-core plugin's methodology/templates/enabling/ai-ethics/decision-log/README.md`).
+The decision file format must follow `enabling/<concern>/decision-log/README.md` (which itself comes from `the pom-core plugin's methodology/templates/enabling-standards/ai-ethics/decision-log/README.md`).

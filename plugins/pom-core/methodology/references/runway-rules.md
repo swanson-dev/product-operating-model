@@ -13,7 +13,7 @@ The **Technical Leader (TL)** in the Product Trio owns the runway. The TL does *
 | **ADR** (Architecture Decision Record) | `ADR-NNNN-<slug>.md` | A single binding decision: context, options, decision, consequences. Numbered sequentially; immutable once recorded. |
 | **Pattern** | `PATTERN-<slug>.md` | A reusable design pattern documented for the product's pods. Versioned by edit history. |
 | **Runway Plan** | `runway-plan.md` (single file) | Living document. Lists current ADRs, patterns, capacity assumptions, runway investments in flight. Updated continuously. |
-| **Model Cards** | `model-cards/MC-<slug>.md` | For AI/ML use cases — see [`../templates/enabling/ai-ethics/model-card-template.md`](../templates/enabling/ai-ethics/model-card-template.md). |
+| **Model Cards** | `model-cards/MC-<slug>.md` | For AI/ML use cases — see [`../templates/enabling-standards/ai-ethics/model-card-template.md`](../templates/enabling-standards/ai-ethics/model-card-template.md). |
 
 ## ADR rules
 
