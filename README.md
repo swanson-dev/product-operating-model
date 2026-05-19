@@ -1,5 +1,24 @@
 # Product Operating Model — Claude Code marketplace
 
+## Who this is for
+
+- **Heads of Product, CPOs, and product-ops leaders** standing up (or rescuing) a Marty-Cagan-style product operating model and tired of governance living in slide decks.
+- **Product trios** (PM / PD / TL) who want decisions — kill, park, route, promote — captured in one auditable trail instead of scattered across Jira, Confluence, and Slack threads.
+- **Portfolio and platform leaders** balancing many products, shared platform services, and enabling concerns (AI ethics, security, accessibility) without re-litigating standards on every initiative.
+- **Regulated-industry teams** (insurance, fintech, healthcare, retail) who need industry-specific ethical and viability framing baked into the gate, not bolted on afterwards.
+- **Solo founders and small product teams** who want the discipline of a real operating model without hiring a transformation consultancy to install one.
+
+## Why use it
+
+- **Operate the model, don't just diagram it.** Every step — intake, WSJF scoring, four-question gate, disposition, runway, pod formation — is a Claude Code command that writes real artifacts, not a Miro board you'll abandon in three weeks.
+- **Auditable by default.** Append-only UCs, dispositions, ADRs, and decision logs mean you can always answer "why did we kill that?" or "who signed off on this exception?" months later.
+- **Gates that actually gate.** `pom-promote-to-backlog` refuses to promote anything that isn't 4/4 ✅; `pom-form-pod` enforces the 2–7 composition rule; `pom-ingest-use-case` won't write a UC without WSJF scores. The methodology is enforced in code, not vibes.
+- **Industry-calibrated out of the box.** Insurance, fintech, healthcare, and retail overlays ship calibrated WSJF rubrics and starter enabling standards — you're not writing the PHI-handling standard from scratch on day one.
+- **Lives where work happens.** Pure markdown, no separate SaaS to license, no database to maintain, no integrations to break. Runs anywhere Claude Code runs and plays well with whatever tracker your team already uses (Azure DevOps, Jira, Linear, GitHub Issues).
+- **Reversible adoption.** Start with one product, one Use Case, one disposition. There's no platform migration — the whole thing is files in a repo.
+
+---
+
 A Claude Code marketplace that operationalises the **Product Operating Model** (POM) — a target operating model for product organisations. It covers:
 
 - **Intake** — capture stakeholder inputs as Use Cases, score them with WSJF
