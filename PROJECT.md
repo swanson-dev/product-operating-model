@@ -51,10 +51,10 @@ The non-negotiables that shape every PR.
 
 ## Versioning and releases
 
-- **SemVer per plugin.** Each plugin under `plugins/` bumps independently. The marketplace version bumps when the plugin list itself changes.
-- **One CHANGELOG, sectioned by version.** Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). `[Unreleased]` rolls forward; tagged versions become headed sections with ISO dates.
-- **Tags are the release contract.** `v0.1.0`, `v0.2.0`, etc. CI / install consumers should reference tags, not branches.
-- **Backwards compatibility for one minor version per plugin.** Breaking changes get a major bump and a migration note in CHANGELOG.
+- **Git tags are the release contract.** `v0.1.0`, `v0.2.0`, etc. mark marketplace-wide releases — what users install and reference. CI and install consumers should pin to tags, not branches.
+- **Two version surfaces, not always in lockstep.** Each `plugins/*/.claude-plugin/plugin.json` and the top-level `marketplace.json` carry a `version` field that bumps when *that surface* changes meaningfully. These per-plugin versions can lag behind marketplace tags when a tagged release's changes are confined to other plugins — the manifest version field is per-plugin SemVer, not a mirror of the marketplace tag.
+- **One CHANGELOG, sectioned by version.** Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). `[Unreleased]` rolls forward; tagged versions become headed sections with ISO dates. The CHANGELOG is the single source of truth for what's in each release, across both version surfaces.
+- **Backwards compatibility for one minor version per plugin.** Breaking changes get a major bump on the affected plugin manifest and a migration note in CHANGELOG.
 
 ## Repository layout
 
@@ -68,7 +68,7 @@ The non-negotiables that shape every PR.
 ├── LICENSE                            MIT
 ├── docs/superpowers/                  design specs and implementation plans per feature
 └── plugins/
-    ├── pom-core/                      required plugin (15 skills, 7 agents, 4 orchestrators)
+    ├── pom-core/                      required plugin (skills, agents, orchestrator commands)
     ├── pom-insurance/                 industry overlay
     ├── pom-fintech/                   industry overlay
     ├── pom-healthcare/                industry overlay

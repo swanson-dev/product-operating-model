@@ -25,7 +25,7 @@ See [`docs/superpowers/specs/2026-05-19-pom-council-design.md`](./docs/superpowe
 
 These are *candidate* directions, not commitments. They move into "In flight" once a spec lands in `docs/superpowers/specs/`. Listed in rough priority order based on the project rationale; the maintainer makes the call.
 
-- **Dogfood the insurance overlay on a live portfolio.** v0.2.0 shipped the insurance plugin and ADO sync; v0.4 would run them against a real product team and feed surprises back as fixes. The first overlay to graduate from "shipped" to "validated in production."
+- **Dogfood the insurance overlay on a live portfolio.** The insurance plugin shipped in v0.1.0 and ADO sync shipped in v0.2.0; v0.4 would run both against a real product team and feed surprises back as fixes. The first overlay to graduate from "shipped" to "validated in production."
 - **Tracker integration parity.** ADO Boards sync exists; Jira and Linear are obvious next targets given the audience. Same asymmetric contract (POM owns slice / acceptance / outcome; tracker owns state / dates).
 - **Pod health beyond composition.** The 2–7 rule is structural. Pod health metrics — WIP, cycle time, runway burn rate, ADR cadence — would round out the pod-level operating loop.
 - **AI-assisted Q1–Q4 drafting.** Today the Discovery gate is human-graded with optional Council pre-staging. A pre-fill assistant that drafts each answer from the underlying DISC / UC context (still graded by a human) would cut Discovery cycle time.
