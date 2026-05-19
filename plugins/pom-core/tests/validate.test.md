@@ -73,6 +73,54 @@
 
 ---
 
+## Scenario E: R3.11 — bad Council filename rejected
+
+**Setup:** A POM repo containing `products/foo/discovery-backlog/DISC-2026-05-bar.md` AND a malformed Council file at `products/foo/discovery-backlog/disc-2026-05-bar.council-bad-timestamp.md`.
+
+**Invocation:** `/pom-validate`
+
+**Expected outcome:** Validator emits ERROR with rule ID `R3.11`, the file path, and the expected filename pattern `^<disc-slug>\.council-\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}Z(-\d+)?\.md$`. Validator exit code is non-zero.
+
+**Pressure points:** Validator silently passes the file → FAIL (filename rule must enforce).
+
+---
+
+## Scenario F: R3.11 — missing frontmatter field
+
+**Setup:** Council file with a valid filename but frontmatter missing the `synthesizer:` key.
+
+**Invocation:** `/pom-validate`
+
+**Expected outcome:** Validator emits ERROR with `R3.11` naming the missing field (`synthesizer`) and the file path.
+
+**Pressure points:** If the validator names a different missing field or reports a different rule ID → FAIL.
+
+---
+
+## Scenario G: R3.12 — WARN when a 4/4 ✅ DISC has no Council file
+
+**Setup:** A DISC at `products/foo/discovery-backlog/DISC-2026-05-baz.md` with all four gate questions ✅ in its Promotion Readiness table. Zero `disc-2026-05-baz.council-*.md` files exist in the same directory.
+
+**Invocation:** `/pom-validate`
+
+**Expected outcome:** Validator emits **WARN** (not ERROR) with rule ID `R3.12` and message: `"DISC promoted to 4/4 ✅ without any Council run; consider /pom-council before promotion"`. Validator exit code remains 0 (WARNs are non-blocking).
+
+**Pressure points:** Validator emits ERROR instead of WARN → FAIL (Council is consultative, not gating — verdict authority must remain with `pom-discovery-gate`).
+
+---
+
+## Scenario H: R3.12 — silent when Council exists
+
+**Setup:** Same as R3.12 WARN scenario above, but a single valid Council file `disc-2026-05-baz.council-2026-05-15T10-00-00Z.md` exists in the same directory.
+
+**Invocation:** `/pom-validate`
+
+**Expected outcome:** No R3.12 finding. Validator output for this DISC is silent on Council-related concerns.
+
+**Pressure points:** Validator emits WARN even when a Council exists → FAIL.
+
+---
+
 ## Reference comparison
 
 Scenario A (Voyager passes cleanly) is the load-bearing test. If it fails, the templates and/or `validation-rules.md` are wrong — fix those, not Voyager. The whole purpose of Voyager-derived templates is that Voyager IS the conforming reference.
