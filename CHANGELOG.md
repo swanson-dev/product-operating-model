@@ -28,7 +28,17 @@ Each ships: plugin.json, README, single `pom-<industry>-init` skill, overlay/ co
 - **pom-healthcare** — Healthcare overlay (PHI handling, clinical safety, interoperability, AI-ethics-healthcare; Q4 sub-questions H1–H8). Richest content per design.
 - **pom-retail** — Retail / e-commerce overlay (PCI-retail, accessibility-regulatory, omnichannel data, fulfillment integrity; Q4 sub-questions R1–R7).
 
+### Fixed during smoke testing (pre-tag)
+Five spec-vs-implementation gaps surfaced during Phase E smoke tests and were fixed before tagging:
+1. **`pluginRoot` not honored** by Claude Code's installer — switched to inline `./plugins/<name>` source paths in `marketplace.json`.
+2. **`repository` field must be a string, not an object** — converted all 5 `plugin.json` files from `{type, url, directory}` to plain URL string.
+3. **PowerShell syntax in Bash on Windows** — industry `init` skills now prescribe the `Glob` tool for pre-flight existence checks (cross-shell, no shell at all).
+4. **R8.1 / R7.5: rubrics not self-contained** — all 5 industry-style rubrics (generic + 4 industry overlays) now inline the WSJF formula + Fibonacci scale instead of relying on a relative link to `wsjf-formula.md` that bootstrap doesn't create.
+5. **GitHub URL ownership** — corrected from `swansoncreativestudios` to `swanson-dev` across all manifests and READMEs.
+
+All five fixes are mechanical / metadata. No skill behaviour changed.
+
 ### Known limitations / open questions
-- Plugin auto-discovery of `skills/` directory has been validated for `pom-core` via the canary test; not yet smoke-tested for the industry overlay plugins individually. Phase E smoke tests cover this.
-- Industry init skills (`pom-<industry>-init`) describe merge-prompt semantics; the prompt logic is invoked at runtime by Claude Code and not unit-tested in this release.
+- Plugin auto-discovery of `skills/` directory has been validated for `pom-core` (canary) and `pom-healthcare` (smoke test 5). Other industry plugins follow the same shape but are not individually verified.
+- Industry init skills describe merge-prompt semantics; the prompt logic is invoked at runtime by Claude Code and not unit-tested in this release.
 - See `plugins/pom-core/README.md` "Architectural notes" for the read-vs-write skill split and append-only semantics.
