@@ -45,7 +45,7 @@ Severity levels:
 | R3.8 | Product Backlog files match `PB-YYYY-MM-<slug>.md` | ERROR |
 | R3.9 | Each pod directory (excluding `_template/`) contains `pod.md` | ERROR |
 | R3.10 | Pod composition shows 2–7 members + SM + PO | WARN if outside range |
-| R3.11 | Council files match `<disc-slug>.council-YYYY-MM-DDTHH-MM-SSZ(-N)?.md` AND contain required frontmatter (`id`, `disc`, `ran_at`, `roles`, `synthesizer`, `tensions_flagged`, `low_confidence_count`). The `disc` field must point to an existing DISC in the same directory. | ERROR |
+| R3.11 | Council files match `<disc-slug>.council-YYYY-MM-DDTHH-MM-SSZ(-N)?.md` AND contain required frontmatter (`id`, `disc`, `ran_at`, `roles`, `synthesizer`, `overlay`, `tensions_flagged`, `low_confidence_count`). The `disc` field must point to an existing DISC in the same directory. | ERROR |
 | R3.12 | A DISC with all four Promotion Readiness questions ✅ AND zero `<disc-slug>.council-*.md` siblings in the same directory should consider running `/pom-council` before promotion. | WARN |
 
 ## R4 — Runway
