@@ -13,7 +13,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follo
 ### Rationale
 v0.2 closed the visibility loop (cockpit, paste-ready blocks, ADO sync). v0.3 closes the **decision-quality** loop. Trio meetings today are "read the DISC out loud → react"; Council pre-stages cross-role disagreements so meetings start where the friction actually is. The strictly-consultative posture protects existing gate authority — `/pom-discovery-gate` remains the sole grader, and `/pom-promote-to-backlog` remains the sole promoter.
 
-## [Unreleased] — v0.2 in progress
+## [0.2.0] — 2026-05-19
 
 ### Added
 - **Paste-ready stakeholder summary in every artifact-producing skill.** `pom-discovery-gate`, `pom-runway-add-adr`, and `pom-decision-log` now generate a dashed-line-framed paragraph in the CLI report — matching the existing pattern in `pom-disposition` and `pom-promote-to-backlog`. The block is for Teams/email/PR comments; it lives only in the report, never in the artifact file. Test contracts (`*.test.md`) updated with the assertion in each affected scenario.
