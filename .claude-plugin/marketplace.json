@@ -1,0 +1,58 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "product-operating-model",
+  "description": "Product Operating Model toolkit — intake funnel, four-question Discovery gate, WSJF scoring, product/platform/enabling layers, runway management, and structural validation. Optional industry overlays.",
+  "version": "0.1.0",
+  "owner": {
+    "name": "Josh Swanson",
+    "email": "swansoncreativestudios@gmail.com"
+  },
+  "pluginRoot": "./plugins",
+  "plugins": [
+    {
+      "name": "pom-core",
+      "source": "./pom-core",
+      "description": "Operate a Product Operating Model portfolio: ingest, score (WSJF), gate (4-question), route, promote, validate. Ships with the generic industry baseline.",
+      "version": "0.1.0",
+      "category": "productivity",
+      "license": "MIT",
+      "keywords": ["pom", "wsjf", "discovery-gate", "portfolio", "product-management", "platform-engineering"]
+    },
+    {
+      "name": "pom-insurance",
+      "source": "./pom-insurance",
+      "description": "Insurance overlay for POM: rubric, regulatory Q4 framing, starter enabling standards (state filing, actuarial review).",
+      "version": "0.1.0",
+      "category": "productivity",
+      "license": "MIT",
+      "keywords": ["pom", "insurance", "regulatory"]
+    },
+    {
+      "name": "pom-fintech",
+      "source": "./pom-fintech",
+      "description": "Fintech overlay for POM: rubric, consumer-protection Q4 framing, PCI/KYC starter enabling standards.",
+      "version": "0.1.0",
+      "category": "productivity",
+      "license": "MIT",
+      "keywords": ["pom", "fintech", "pci", "kyc"]
+    },
+    {
+      "name": "pom-healthcare",
+      "source": "./pom-healthcare",
+      "description": "Healthcare overlay for POM: rubric, HIPAA/clinical-safety Q4 framing, PHI/interoperability starter enabling standards.",
+      "version": "0.1.0",
+      "category": "productivity",
+      "license": "MIT",
+      "keywords": ["pom", "healthcare", "hipaa", "phi"]
+    },
+    {
+      "name": "pom-retail",
+      "source": "./pom-retail",
+      "description": "Retail overlay for POM: rubric, PCI/accessibility Q4 framing, omnichannel starter enabling standards.",
+      "version": "0.1.0",
+      "category": "productivity",
+      "license": "MIT",
+      "keywords": ["pom", "retail", "omnichannel", "accessibility"]
+    }
+  ]
+}
