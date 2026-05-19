@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "description": "Fintech industry overlay for the Product Operating Model. Layers consumer-protection Q4 framing (CFPB, Reg E/Z, BSA/AML), PCI/KYC starter standards, and a fintech-calibrated WSJF rubric on top of pom-core. Requires pom-core.",
   "author": { "name": "Josh Swanson", "email": "swansoncreativestudios@gmail.com" },
-  "homepage": "https://github.com/swansoncreativestudios/product-operating-model",
-  "repository": { "type": "git", "url": "https://github.com/swansoncreativestudios/product-operating-model.git", "directory": "plugins/pom-fintech" },
+  "homepage": "https://github.com/swanson-dev/product-operating-model",
+  "repository": { "type": "git", "url": "https://github.com/swanson-dev/product-operating-model.git", "directory": "plugins/pom-fintech" },
   "license": "MIT",
   "keywords": ["pom", "fintech", "cfpb", "pci", "kyc", "bsa-aml", "banking", "lending", "payments"]
 }

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "description": "Healthcare industry overlay for the Product Operating Model. Layers HIPAA/clinical-safety Q4 framing, PHI/interoperability/clinical-safety starter standards, and a healthcare-calibrated WSJF rubric on top of pom-core. Requires pom-core.",
   "author": { "name": "Josh Swanson", "email": "swansoncreativestudios@gmail.com" },
-  "homepage": "https://github.com/swansoncreativestudios/product-operating-model",
-  "repository": { "type": "git", "url": "https://github.com/swansoncreativestudios/product-operating-model.git", "directory": "plugins/pom-healthcare" },
+  "homepage": "https://github.com/swanson-dev/product-operating-model",
+  "repository": { "type": "git", "url": "https://github.com/swanson-dev/product-operating-model.git", "directory": "plugins/pom-healthcare" },
   "license": "MIT",
   "keywords": ["pom", "healthcare", "hipaa", "phi", "fhir", "clinical-safety", "interoperability", "uscdi", "fda"]
 }

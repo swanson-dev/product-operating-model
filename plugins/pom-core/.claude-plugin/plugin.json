@@ -5,12 +5,12 @@
   "author": {
     "name": "Josh Swanson",
     "email": "swansoncreativestudios@gmail.com",
-    "url": "https://github.com/swansoncreativestudios"
+    "url": "https://github.com/swanson-dev"
   },
-  "homepage": "https://github.com/swansoncreativestudios/product-operating-model",
+  "homepage": "https://github.com/swanson-dev/product-operating-model",
   "repository": {
     "type": "git",
-    "url": "https://github.com/swansoncreativestudios/product-operating-model.git",
+    "url": "https://github.com/swanson-dev/product-operating-model.git",
     "directory": "plugins/pom-core"
   },
   "license": "MIT",

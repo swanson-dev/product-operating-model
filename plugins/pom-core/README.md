@@ -5,7 +5,7 @@ The core plugin for the [Product Operating Model marketplace](../../README.md). 
 ## Install
 
 ```text
-/plugin marketplace add swansoncreativestudios/product-operating-model
+/plugin marketplace add swanson-dev/product-operating-model
 /plugin install pom-core@product-operating-model
 ```
 
