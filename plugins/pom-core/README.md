@@ -59,6 +59,7 @@ All skills are directly invocable (`/<skill-name> <args>`).
 | `pom-seed-enabling-standard` | Bootstrap an enabling concern (AI ethics, security, etc.) | Yes (enabling/<concern>/) |
 | `pom-decision-log` | Append precedent-setting decisions to an enabling concern. Append-only | Yes (enabling/<concern>/decision-log/) |
 | `pom-status` | Read-only portfolio snapshot for stakeholder updates | No |
+| `pom-explain` | Read-only one-line live summary of any artifact by ID (UC/DISP/DISC/PB/ADR/DEC) | No |
 | `pom-validate` | Read-only structural validation against the v0.1 ruleset | No |
 
 ## Agents (7)
