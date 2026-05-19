@@ -1,38 +1,141 @@
 # Product Operating Model — Claude Code marketplace
 
-A Claude Code marketplace that operationalises the **Product Operating Model** (POM) — a target operating model for product organisations covering intake, four-question Discovery gating, WSJF prioritisation, product/platform/enabling layers, runway management, and structural validation.
+A Claude Code marketplace that operationalises the **Product Operating Model** (POM) — a target operating model for product organisations. It covers:
 
-> **Status:** v0.1.0 in development. Install instructions and full docs follow shortly.
+- **Intake** — capture stakeholder inputs as Use Cases, score them with WSJF
+- **Discovery gating** — the four-question gate (desirable / viable / feasible / ethical)
+- **Routing** — kill / park / route / split decisions, with disposition tracking
+- **Products, pods, runway** — product team scaffolding with 2–7 pod composition rule, ADR-driven runway, runway plans
+- **Platform layer** — portfolio-shared services with intake/consumption contracts
+- **Enabling concerns** — AI ethics, security, accessibility, data quality (generic) plus industry overlays
+- **Validation** — structural ruleset (~30 rules) that runs in seconds against any POM repo
 
-## What ships
+Modelled on the Marty Cagan / Voyager / SVPG product operating model literature, packaged for daily use inside Claude Code.
 
-| Plugin | Required? | What it gives you |
-|--------|-----------|-------------------|
-| `pom-core` | **Yes** | 15 skills, 7 agents, 4 orchestrator commands, the methodology library, and the generic industry baseline. |
-| `pom-insurance` | Optional | Insurance overlay: rubric, regulatory Q4 framing, starter enabling standards. |
-| `pom-fintech` | Optional | Fintech overlay: rubric, consumer-protection Q4 framing, PCI/KYC starter standards. |
-| `pom-healthcare` | Optional | Healthcare overlay: rubric, HIPAA/clinical-safety Q4 framing, PHI/interoperability starter standards. |
-| `pom-retail` | Optional | Retail overlay: rubric, PCI/accessibility Q4 framing, omnichannel starter standards. |
-
-## Install (after v0.1.0 publishes)
+## Quick install
 
 ```text
 /plugin marketplace add swansoncreativestudios/product-operating-model
 /plugin install pom-core@product-operating-model
-# optional, after pom-core is bootstrapped:
-/plugin install pom-healthcare@product-operating-model
 ```
 
-## Quickstart
+Optional industry overlays (install after `pom-core`):
 
 ```text
-/pom-bootstrap /path/to/new-pom-repo --rubric=generic
-/pom-status /path/to/new-pom-repo
-/pom-validate /path/to/new-pom-repo
+/plugin install pom-insurance@product-operating-model
+/plugin install pom-fintech@product-operating-model
+/plugin install pom-healthcare@product-operating-model
+/plugin install pom-retail@product-operating-model
 ```
 
-Full quickstart, command reference, and methodology overview ship in `plugins/pom-core/README.md`.
+After install, scaffold a POM repo and start operating:
+
+```text
+/pom-bootstrap /path/to/new-portfolio --rubric=generic
+/pom-funnel /path/to/new-portfolio/use-cases/first-memo.pdf
+/pom-status /path/to/new-portfolio
+```
+
+## What's in the marketplace
+
+| Plugin | Required? | Files | What it gives you |
+|--------|-----------|-------|-------------------|
+| [`pom-core`](./plugins/pom-core/) | **Yes** | 15 skills, 7 agents, 4 orchestrator commands, full methodology library, generic industry baseline | Operate a complete POM portfolio |
+| [`pom-insurance`](./plugins/pom-insurance/) | Optional | Calibrated rubric + 4 starter enabling standards (regulatory reporting, actuarial review, policyholder communications, state filings) | Insurance-specific Q4 framing (I1–I7) |
+| [`pom-fintech`](./plugins/pom-fintech/) | Optional | Calibrated rubric + 4 starter enabling standards (PCI, KYC/AML/BSA, consumer protection, model risk) | Fintech-specific Q4 framing (F1–F7) |
+| [`pom-healthcare`](./plugins/pom-healthcare/) | Optional | Calibrated rubric + 4 starter enabling standards (PHI handling, clinical safety, interoperability, AI-ethics-healthcare) | Healthcare-specific Q4 framing (H1–H8) |
+| [`pom-retail`](./plugins/pom-retail/) | Optional | Calibrated rubric + 4 starter enabling standards (PCI-retail, accessibility-regulatory, omnichannel data, fulfillment integrity) | Retail-specific Q4 framing (R1–R7) |
+
+Industry plugins are **content overlays** — they extend (never replace) the generic baseline in `pom-core`. Apply them via `/pom-<industry>-init <pom-repo-path>` after bootstrap.
+
+## How the pieces fit
+
+```
+Stakeholder source  ──▶  /pom-funnel  ──▶  /pom-ingest-use-case  ──▶  UC scored (WSJF)
+                                                                            │
+                                                                            ▼
+                                                                /pom-disposition
+                                                          (kill │ park │ route │ split)
+                                                                            │
+                                                                  route ────┘
+                                                                            ▼
+                                                   /pom-route-to-discovery  ──▶  DISC in product
+                                                                            │
+                                                                            ▼
+                                                       /pom-discovery-gate
+                                                  (Q1 desirable, Q2 viable,
+                                                   Q3 feasible, Q4 ethical)
+                                                                            │
+                                                                  4/4 ✅────┘
+                                                                            ▼
+                                                       /pom-promote-to-backlog  ──▶  PB item (vertical slice)
+                                                                            │
+                                                                            ▼
+                                                              (pod pull, build, ship)
+```
+
+Each `pom-*` skill has matching workflow documentation in `plugins/pom-core/methodology/workflows/` and writes append-only artifacts (UCs, dispositions, DISC shaping logs, ADRs, decision-logs) that form the auditable history of how decisions got made.
+
+## Repo layout
+
+```
+.
+├── .claude-plugin/marketplace.json    ← marketplace manifest (5 plugins)
+├── README.md                          ← this file
+├── LICENSE                            ← MIT
+├── CHANGELOG.md
+└── plugins/
+    ├── pom-core/                      ← the core plugin
+    ├── pom-insurance/                 ← industry add-on
+    ├── pom-fintech/                   ← industry add-on
+    ├── pom-healthcare/                ← industry add-on
+    └── pom-retail/                    ← industry add-on
+```
+
+Each plugin is independently installable. Each has its own `.claude-plugin/plugin.json` and `README.md` documenting its surface.
+
+## Design principles
+
+- **Append-only history**: UC scoring → disposition → DISC shaping → ADRs → enabling-concern decisions all leave an immutable trail. Reversals create new artifacts that supersede; nothing is silently rewritten.
+- **Read-only validators**: `pom-status` and `pom-validate` never touch the portfolio.
+- **Gate enforcement**: `pom-promote-to-backlog` refuses to promote without 4/4 ✅; `pom-ingest-use-case` refuses to write a UC without WSJF scores; `pom-form-pod` enforces the 2–7 composition rule.
+- **Industry overlays are additive content, not replacement code**: a healthcare portfolio still uses the generic ai-ethics standard, plus the healthcare AI-ethics overlay — both, never one-or-the-other.
+- **Agents earn their keep**: workflow agents protect main context on heavy reads; audit agents preserve confirmation-bias independence; role agent (`pom-trio`) explicitly stays in lane.
+
+## Compatibility
+
+- **Claude Code** versions supporting plugins + marketplace install (current spec at time of writing).
+- **OS-agnostic** — uses `${CLAUDE_PLUGIN_ROOT}` for plugin-relative references; no hard-coded paths.
+- **Markdown only** — no compiled binaries, no scripts that require a specific runtime beyond the Bash, Read, Write tools that Claude Code provides.
+
+## Development setup
+
+This is the source repo. If you're contributing or working on the marketplace itself:
+
+```bash
+git clone https://github.com/swansoncreativestudios/product-operating-model
+cd product-operating-model
+
+# Install locally for live testing
+# (Claude Code session:)
+/plugin marketplace add E:\Projects\product-operating-model
+/plugin install pom-core@product-operating-model
+
+# Run the tests (informal — test files are spec-style, see plugins/pom-core/tests/)
+ls plugins/pom-core/tests/
+```
+
+## Versioning
+
+This marketplace and all 5 plugins are at **v0.1.0**. Future versions will:
+- Bump per-plugin where changes are scoped
+- Bump the marketplace version when the plugin list itself changes
+- Maintain backwards-compatibility for one minor version per plugin
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT — see [LICENSE](./LICENSE). The methodology references (four-question gate, WSJF, vertical slicing) draw on widely-published industry practice; this packaging is original.
+
+## Contributing
+
+See [CHANGELOG.md](./CHANGELOG.md) for what's shipped. Contributions welcome via PR. For substantial changes, open an issue first to discuss.

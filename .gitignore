@@ -15,6 +15,9 @@ scratch/
 tmp/
 *.local.md
 
+# Claude Code session state (per-user, not source)
+.claude/
+
 # Node (in case anyone adds tooling later)
 node_modules/
 npm-debug.log*
