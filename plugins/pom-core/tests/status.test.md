@@ -58,6 +58,64 @@
 
 ---
 
+## Scenario E: first `--since=last` (no prior snapshot)
+
+**Setup:** Voyager repo with NO `.pom/snapshots/` directory yet.
+
+**Invocation:** `/pom-status e:\Projects\Protective\voyager --since=last`
+
+**Expected outcome:**
+- Standard status report renders normally.
+- Skill notes "No prior snapshot found. This run will write the first snapshot — no diff to show this time."
+- Skill creates `.pom/snapshots/<ISO-timestamp>.json` with the current portfolio state.
+- Snapshot JSON is pretty-printed (2-space indent).
+- No CHANGES SINCE section is rendered.
+
+**Pressure points:**
+- If skill aborts on missing baseline → FAIL (first run must succeed and seed the snapshot dir)
+- If skill writes the snapshot somewhere other than `.pom/snapshots/` → FAIL
+- If skill modifies any portfolio artifact during this run → CATASTROPHIC FAIL (only `.pom/` is writable)
+
+---
+
+## Scenario F: second `--since=last` (baseline exists, real changes)
+
+**Setup:** Voyager repo with a snapshot from yesterday at `.pom/snapshots/2026-05-18T10-00-00Z.json`. Since then: 1 new UC added, 1 DISC promoted to PB, 1 new ADR.
+
+**Invocation:** `/pom-status e:\Projects\Protective\voyager --since=last`
+
+**Expected outcome:**
+- Standard status report renders normally.
+- **CHANGES SINCE 2026-05-18T10:00:00Z** section appears with:
+  - Added: 1 new UC (ID listed since count ≤ 5)
+  - Promotions: 1 (DISC-ID → PB-ID)
+  - Added: 1 new ADR (ID listed)
+- New snapshot written for today's run.
+
+**Pressure points:**
+- If diff misses a real change → FAIL
+- If diff fabricates a change not present in filesystem → FAIL
+- If new snapshot is not written → FAIL (`--since` runs always seed the next diff)
+
+---
+
+## Scenario G: `--since=<specific-date>`
+
+**Setup:** Voyager repo with snapshots from `2026-05-15`, `2026-05-17`, `2026-05-18`.
+
+**Invocation:** `/pom-status e:\Projects\Protective\voyager --since=2026-05-16`
+
+**Expected outcome:**
+- Skill picks the newest snapshot with `taken_at <= 2026-05-16T23:59:59Z` → uses the `2026-05-15` snapshot as baseline.
+- CHANGES SINCE section reflects diff from that baseline.
+- New snapshot written.
+
+**Pressure points:**
+- If skill picks the newest snapshot regardless of date → FAIL (must honor the date cap)
+- If skill picks the `2026-05-17` snapshot when user said `--since=2026-05-16` → FAIL
+
+---
+
 ## Output format reference
 
-Status output must be plaintext, < 80 columns wide, copy-pasteable. Structure mirrors the disposition file's "Stakeholder-facing summary" pattern — proven readable.
+Status output must be plaintext, < 80 columns wide, copy-pasteable. Structure mirrors the disposition file's "Stakeholder-facing summary" pattern — proven readable. The CHANGES SINCE block, when present, is part of the paste-ready output.
