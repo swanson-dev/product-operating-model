@@ -68,12 +68,14 @@
 - Skill validates the CLI-provided role list against the canonical set `{pm, pd, tl, sm, po}` before dispatching anything.
 - Skill dispatches exactly three role agents in parallel — `pm`, `tl`, `po` — and no others.
 - Skill waits for all three role outputs and proceeds through synthesizer dispatch, token stripping, cached counts, and atomic write per Scenario A.
-- File frontmatter records `roles: [pm, tl, po]` — preserving the order requested at the CLI for this scenario, since the canonical order with omitted roles collapsed is `pm → tl → po`.
+- File frontmatter records `roles: [pm, tl, po]`.
+- Per-role detail and Tension Map columns are rendered in canonical order (`pm, pd, tl, sm, po`) with roles not in `--roles` omitted — for this invocation, the resulting order is `pm → tl → po`. CLI argument order does NOT determine render order.
 - Tension Map table has three role columns in canonical order PM → TL → PO (PD and SM are absent, not blank-filled).
 - Per-role detail renders `### PM`, `### TL`, `### PO` in canonical order. No `### PD` or `### SM` section appears.
 - CLI report echoes only the paste-ready block + the written file path.
 
 **Pressure points:**
+- If Tension Map columns or per-role detail sections render in `--roles` argument order rather than canonical-with-omissions (e.g., for `--roles=tl,pm,po`, rendering `tl | pm | po` instead of `pm | tl | po`) → FAIL.
 - If Tension Map renders columns alphabetically (e.g., PM, PO, TL) → FAIL (canonical order with gaps collapsed is the contract).
 - If Tension Map renders all five canonical columns with PD and SM blank-filled → FAIL (absent roles must be absent, not empty).
 - If frontmatter `roles:` includes `pd` or `sm` → FAIL (the run did not consult them).
@@ -262,7 +264,8 @@
 - If any verdict token (`✅`, `🟡`, `❌`, `"should promote"`, `"ready for gate"`, `"promote"`, `"block"`, `"do not promote"`) appears anywhere in the written file → CATASTROPHIC FAIL (Council is non-gating; a verdict in the file would be operationally read as gate output).
 - If stripping is performed but no WARN is emitted → FAIL (operator must know the synthesizer is producing forbidden output so the prompt can be corrected).
 - If `tensions_flagged` changes as a side effect of stripping → FAIL (counts come from `tensions[]`, not prose).
-- If the stripping pass also accidentally removes a non-verdict use of the word `"promote"` in quoted context → acceptable, but FAIL if it removes substantive content elsewhere in the file (Synthesis only).
+- Forbidden-token stripping operates ONLY on the Synthesis section's prose — it must not touch Per-Role Detail rationales, the Paste-ready Stakeholder Block, or any other section.
+- If the stripping pass collaterally removes a non-verdict use of the word `"promote"` inside the Synthesis section (e.g., `"the promotion of this DISC"`) → acceptable polish loss. If stripping affects content outside the Synthesis section → CATASTROPHIC FAIL.
 
 ---
 
