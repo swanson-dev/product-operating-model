@@ -50,6 +50,10 @@ Industry plugins are **content overlays** — they extend (never replace) the ge
 
 ## How the pieces fit
 
+![POM ingestion to output pipeline — UC funnel, four-question gate, promotion to backlog, runway and decision-log side rails, and read-only projections](plugins/pom-core/methodology/diagrams/pom-pipeline.png)
+
+The text-only version of the same flow:
+
 ```
 Stakeholder source  ──▶  /pom-funnel  ──▶  /pom-ingest-use-case  ──▶  UC scored (WSJF)
                                                                             │

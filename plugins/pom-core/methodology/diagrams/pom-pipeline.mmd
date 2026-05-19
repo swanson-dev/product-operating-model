@@ -1,0 +1,52 @@
+%%{init: {"flowchart": {"htmlLabels": false, "curve": "basis"}, "themeVariables": {"fontFamily": "sans-serif"}}}%%
+flowchart TD
+    SRC["Stakeholder source<br/>PDF / deck / memo / transcript"]:::input
+
+    SRC --> FUNNEL["/pom-funnel"]
+    FUNNEL --> INGEST["/pom-ingest-use-case"]
+    INGEST --> UC[("UC-NNNN<br/>WSJF-scored")]:::artifact
+
+    UC --> DISPO["/pom-disposition"]
+    DISPO -->|kill| KILL[("DISP — killed")]:::artifact
+    DISPO -->|park| PARK[("DISP — parked")]:::artifact
+    DISPO -->|split| SPLIT[("DISP — split<br/>→ new UCs")]:::artifact
+    DISPO -->|route| ROUTE["/pom-route-to-discovery"]
+
+    ROUTE --> DISC[("DISC item<br/>in product")]:::artifact
+    DISC --> GATE["/pom-discovery-gate<br/>Q1 desirable · Q2 viable<br/>Q3 feasible · Q4 ethical"]
+    GATE --> SHAPING[("Discovery shaping log<br/>append-only")]:::artifact
+    GATE -->|"4/4 ✅"| PROMOTE["/pom-promote-to-backlog"]
+    PROMOTE --> PB[("PB item<br/>vertical slice + acceptance")]:::artifact
+
+    PB --> POD["/pom-form-pod"]
+    POD --> PODFILE[("Pod roster<br/>2–7 members")]:::artifact
+    PB --> SYNC["/pom-sync-ado"]
+    SYNC --> ADO[("ADO Feature<br/>or User Story")]:::output
+
+    PB -.runway needed.-> ADR["/pom-runway-add-adr"]
+    ADR --> ADRFILE[("ADR-NNN")]:::artifact
+    ADRFILE --> PLAN["/pom-runway-plan"]
+    PLAN --> RUNWAY[("runway-plan.md")]:::artifact
+
+    GATE -.exception.-> DECLOG["/pom-decision-log"]
+    DECLOG --> DEC[("DEC entry on<br/>enabling concern")]:::artifact
+
+    subgraph OBS["Read-only projections"]
+        STATUS["/pom-status"] --> STATUSOUT[("plaintext digest")]:::output
+        VALIDATE["/pom-validate"] --> VALOUT[("validation report<br/>ERROR / WARN / INFO")]:::output
+        RENDER["/pom-render"] --> HTML[("portfolio.html<br/>single-file cockpit")]:::output
+        PULSE["/pom-pulse"] --> PULSEOUT[("Teams / email digest<br/>of stuck artifacts")]:::output
+        EXPLAIN["/pom-explain"] --> EXPLAINOUT[("one-line status<br/>for any ID")]:::output
+    end
+
+    UC -.read.-> OBS
+    DISC -.read.-> OBS
+    PB -.read.-> OBS
+    ADRFILE -.read.-> OBS
+    DEC -.read.-> OBS
+    PODFILE -.read.-> OBS
+
+    classDef input fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#bfdbfe,rx:6,ry:6,font-family:sans-serif;
+    classDef artifact fill:#14532d,stroke:#22c55e,stroke-width:2px,color:#bbf7d0,rx:6,ry:6,font-family:sans-serif;
+    classDef output fill:#713f12,stroke:#eab308,stroke-width:2px,color:#fef08a,rx:6,ry:6,font-family:sans-serif;
+    classDef default fill:#1e293b,stroke:#475569,stroke-width:2px,color:#f8fafc,rx:6,ry:6,font-family:sans-serif;
