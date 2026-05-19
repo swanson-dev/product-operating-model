@@ -1,6 +1,6 @@
 {
   "name": "pom-core",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Operate a Product Operating Model portfolio — intake, four-question Discovery gate, WSJF scoring, product/platform/enabling layers, runway management, and structural validation. Generic industry baseline included; industry-specific overlays available as separate add-on plugins.",
   "author": {
     "name": "Josh Swanson",

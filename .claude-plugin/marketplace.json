@@ -12,7 +12,7 @@
       "name": "pom-core",
       "source": "./plugins/pom-core",
       "description": "Operate a Product Operating Model portfolio: ingest, score (WSJF), gate (4-question), route, promote, validate. Ships with the generic industry baseline.",
-      "version": "0.1.0",
+      "version": "0.3.0",
       "category": "productivity",
       "license": "MIT",
       "keywords": ["pom", "wsjf", "discovery-gate", "portfolio", "product-management", "platform-engineering"]
