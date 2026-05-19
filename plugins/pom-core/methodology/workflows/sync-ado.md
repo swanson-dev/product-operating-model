@@ -117,7 +117,7 @@ For each PB item WITH an `ado_work_item_id`:
    |---|---|
    | New | shaped |
    | Active | in-flight |
-   | Resolved | in-flight (with `pending verification` note) |
+   | Resolved | in-flight |
    | Closed | shipped |
    | Removed | (refuse; flag for human resolution — ADO doesn't delete, POM doesn't auto-archive) |
 

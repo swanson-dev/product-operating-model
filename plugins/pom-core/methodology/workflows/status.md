@@ -107,7 +107,7 @@ Resolve `--since` to a baseline snapshot:
   - If none exist: report "No prior snapshot found. This run will write the first snapshot — no diff to show this time." Skip `compute_diff`. Still write the snapshot at the end.
 - If `--since=YYYY-MM-DD`:
   - Glob `.pom/snapshots/*.json`. Pick the newest snapshot whose `taken_at` is `<= YYYY-MM-DDT23:59:59Z`.
-  - If none qualifies: pick the oldest snapshot AFTER the date and warn that no snapshot existed on/before the requested date (we are diffing against the closest later snapshot, which is conservative — fewer false "changes").
+  - If none qualifies (every snapshot is newer than the requested date): treat the same as "no baseline" — report "No snapshot exists on or before YYYY-MM-DD. Skipping diff this run." and skip `compute_diff`. Never silently diff against a future-of-requested-date baseline (that would hide real changes between the requested date and the chosen later baseline).
   - If no snapshots exist at all: report and skip diff (same as `--since=last` empty case).
 
 Load the chosen baseline snapshot from disk.

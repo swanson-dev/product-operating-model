@@ -25,7 +25,7 @@ If `$TARGET_DIR/.pom/snapshots/` has prior snapshots, the newest snapshot's `tak
 <step name="scan_stuck_ucs">
 Glob `intake/use-case-backlog/UC-*.md` (exclude template).
 
-For each UC, parse the metadata table. An UC is stuck if:
+For each UC, parse the metadata table. A UC is stuck if:
 - `Status` is `pending` or `scored` (no disposition yet)
 - AND age (today − `Submitted` field date, falling back to git creation date) > `$UC_SLA`
 

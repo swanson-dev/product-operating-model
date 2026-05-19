@@ -16,7 +16,7 @@ allowed-tools:
 Synchronise POM Product Backlog items with Azure DevOps Boards work items. POM is the strategic ledger; ADO is the execution surface. The PB-ID is the bridge.
 
 **Modes:**
-- `--push` (default if neither flag set): create or update ADO work items for PB items not yet synced. Writes to ADO; updates PB markdown to record the new ADO work item ID.
+- `--push` (default if neither flag set): create ADO work items for PB items not yet synced (no `ado_work_item_id` field). PB items already synced are skipped — subsequent POM-side edits to slice / acceptance / out-of-scope are NOT propagated by this skill (the `diff_warn` phase will flag drift; resolving it is operator-driven). The skill writes to ADO and stores the returned work item ID in the PB markdown.
 - `--pull`: read status, started date, and completed date from synced ADO work items; update the corresponding PB markdown fields.
 - (Both): push then pull, in that order. Default behaviour.
 - `--product=<slug>`: scope to one product.
@@ -27,7 +27,7 @@ Synchronise POM Product Backlog items with Azure DevOps Boards work items. POM i
 - **ADO owns** (pull direction): work item `state` (New / Active / Resolved / Closed), `Microsoft.VSTS.Common.ActivatedDate` (mapped to PB `started`), `Microsoft.VSTS.Common.ClosedDate` (mapped to PB `completed`). Never sync ADO's `title` back into POM — that direction is one-way only.
 
 **Configuration:**
-- `.pom/sync-ado.config.json` (committed) — stores: `organization_url`, `project`, `area_path`, `iteration_path` (optional), `work_item_type` (default `User Story`), `last_sync_at` (per direction).
+- `.pom/sync-ado.config.json` (committed) — stores: `organization_url`, `project`, `area_path`, `iteration_path` (optional), `work_item_type` (default `User Story`), `last_pushed_at` and `last_pulled_at` (one or both updated per run, depending on which phases ran).
 - `AZURE_DEVOPS_PAT` environment variable (NEVER written to disk) — the Personal Access Token with `Work Items: Read & Write` scope. If missing, the skill aborts with setup instructions.
 
 **Diff-warn (advisory, not auto-resolved):**
