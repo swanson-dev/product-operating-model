@@ -141,6 +141,16 @@ Append a new dated entry to the Shaping log:
 **Never edit prior log entries. Always append.**
 </step>
 
+<step name="draft_stakeholder_summary">
+Generate a draft **stakeholder-facing summary** (one paragraph the stakeholder can read directly):
+- State the current gate result (READY / NOT READY).
+- Name the closed questions (✅) and the open ones (🟡 / ❌) with their owners.
+- If NOT READY: name the top blocker and who closes it.
+- If READY: name the next action (`/pom-promote-to-backlog`).
+
+Show the draft via chat and use `AskUserQuestion` to confirm or refine.
+</step>
+
 <step name="report">
 ```
 ✅ Discovery gate walkthrough complete for $DISC_ID.
@@ -156,6 +166,11 @@ Overall: {{READY / NOT READY}} for promotion to Product Backlog.
 
 Critical-path next steps:
 {{Numbered list of remaining items}}
+
+Stakeholder summary (paste-ready):
+─────────────────────────────────
+{{stakeholder-facing summary}}
+─────────────────────────────────
 
 {{If READY:}}
 🎯 Recommended next step: `/pom-promote-to-backlog $DISC_ID`
@@ -182,5 +197,6 @@ Address the critical-path items above. Re-run `/pom-discovery-gate $DISC_ID` aft
 - [ ] Promotion Readiness table reflects current state
 - [ ] Critical-path sequence reflects current blockers
 - [ ] Shaping log has a new dated entry summarizing the walkthrough
+- [ ] Stakeholder-facing summary is paste-ready in the CLI report
 - [ ] User has a clear next step (specific blocker or `pom-promote-to-backlog`)
 </success_criteria>

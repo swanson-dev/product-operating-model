@@ -17,10 +17,12 @@
 - Writes `enabling/ai-ethics/decision-log/DEC-YYYY-MM-DD-accept-cohort-gap-uc0002.md`.
 - Does NOT modify any prior decision files (append-only).
 - Reports: file path; reminds the user that this decision is now precedent for future UCs scoring the same concern.
+- **Paste-ready precedent summary** in the CLI report, framed by dashed lines, that states decision + concern + scope + re-review trigger.
 
 **Pressure points:**
 - If skill silently overwrites an existing decision file → CATASTROPHIC FAIL (append-only rule R6.4)
 - If skill skips any of the required fields → FAIL (R6.3)
+- If skill omits the paste-ready precedent summary → FAIL (v0.2 requirement)
 
 ---
 

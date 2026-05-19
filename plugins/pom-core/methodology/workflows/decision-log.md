@@ -113,6 +113,16 @@ Generate the file content:
 Write to `$TARGET/decision-log/$FILENAME`.
 </step>
 
+<step name="draft_stakeholder_summary">
+Generate a draft **stakeholder-facing summary** (one paragraph any reader can paste into a comms channel):
+- State the decision in plain English (what is now precedent).
+- Name the concern (e.g., AI ethics, security, accessibility) and the precedent scope (UC-only / product-only / portfolio-wide).
+- Give the one-line rationale.
+- Name the expiration / re-review trigger so readers know when this gets revisited.
+
+Show the draft via chat and use `AskUserQuestion` to confirm or refine.
+</step>
+
 <step name="report">
 ```
 ✅ Decision logged: DEC-$DATE-$SLUG
@@ -120,6 +130,11 @@ Write to `$TARGET/decision-log/$FILENAME`.
 File: $TARGET/decision-log/$FILENAME
 
 Precedent scope: {{scope}}
+
+Precedent summary (paste-ready):
+─────────────────────────────────
+{{stakeholder-facing summary}}
+─────────────────────────────────
 
 This decision is now precedent. Future UCs touching this concern should:
 1. Read this folder before scoring/shaping.
@@ -143,5 +158,6 @@ This decision is now precedent. Future UCs touching this concern should:
 - [ ] Filename matches `DEC-YYYY-MM-DD-<slug>.md` (R6.3)
 - [ ] All required fields populated
 - [ ] No prior file overwritten
+- [ ] Stakeholder-facing precedent summary is paste-ready in the CLI report
 - [ ] `pom-validate` passes (R6.3, R6.4)
 </success_criteria>

@@ -17,11 +17,13 @@
 - Updates the critical-path unblock sequence with current state.
 - Appends a new entry to the Shaping log dated today, summarizing what was decided.
 - Reports: question-by-question summary + overall verdict (READY / NOT READY for promotion).
+- **Paste-ready stakeholder summary** in the CLI report, framed by dashed lines, that states gate result + open questions + next blocker.
 
 **Pressure points:**
 - If skill silently marks a question ✅ without evidence → FAIL (must require evidence per `four-question-gate.md`)
 - If skill rewrites the entire Discovery file from scratch (losing prior shaping log entries) → FAIL (append-only on the log)
 - If skill marks Q1 ✅ even though PD seat is unassigned → FAIL (Q1 requires the PD as owner)
+- If skill omits the paste-ready stakeholder summary → FAIL (v0.2 requirement)
 
 ---
 

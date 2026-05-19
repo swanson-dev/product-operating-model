@@ -29,6 +29,8 @@ Append a precedent-setting decision to an enabling concern's `decision-log/`. Us
 - Precedent scope (UC-only / product-only / portfolio-wide)
 - Expiration / re-review condition
 
+**Emits** a paste-ready precedent summary in the CLI report — one paragraph for Teams/email/PR comments naming the decision, concern, precedent scope, and re-review trigger.
+
 **Refuses to write to non-decision-log paths:**
 - `intake/dispositions/` → use `/pom-disposition` instead
 - `products/*/runway/` → use `/pom-runway-add-adr` instead

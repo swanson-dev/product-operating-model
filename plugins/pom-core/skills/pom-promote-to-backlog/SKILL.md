@@ -27,9 +27,17 @@ Promote a 4/4 ✅ Discovery item to its product's Product Backlog. Writes a `PB-
 - DISC shaping log (append-only) → promotion entry
 - `products/README.md` portfolio index → Product Backlog count
 
+**Emits engineering affordances in the CLI report** (paste-ready, never written to disk):
+- An ADO-compatible branch name (`pb/PB-YYYY-MM-<slug>`)
+- A PR title (`PB-YYYY-MM-<slug>: <outcome>`)
+- A PR description body in markdown referencing the slice contract, acceptance signals, out-of-scope, and linked runway/ADRs
+
+These thread the PB-ID through every commit and PR — strategic decisions become traceable from `git log`. `/pom-sync-ado` will later use the same fields to push the PB into Azure DevOps.
+
 **After this command:**
 - If no pods exist for this product → run `/pom-form-pod <product> <pod-slug>`
 - Otherwise, the PO Sync orders the Product Backlog; pods pull at their cadence.
+- When a pod pulls, use the suggested branch name and PR template.
 </objective>
 
 <execution_context>

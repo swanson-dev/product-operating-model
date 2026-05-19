@@ -1,9 +1,10 @@
 ---
 name: pom-status
-description: "Use when a POM portfolio's current state needs a human-readable summary — UCs in intake, products and Trio status, Discovery/Product Backlog depth, pod count, recent dispositions/decisions/ADRs, open blockers. Read-only. Plaintext output, copy-pasteable into stakeholder updates."
-argument-hint: "[target-dir] [--product=<slug>] [--recent=<N>]"
+description: "Use when a POM portfolio's current state needs a human-readable summary — UCs in intake, products and Trio status, Discovery/Product Backlog depth, pod count, recent dispositions/decisions/ADRs, open blockers. Optional --since flag adds a 'what changed' diff and writes a snapshot. Plaintext output, copy-pasteable into stakeholder updates."
+argument-hint: "[target-dir] [--product=<slug>] [--recent=<N>] [--since=<date|last>]"
 allowed-tools:
   - Read
+  - Write
   - Bash
   - Glob
   - Grep
@@ -32,7 +33,9 @@ Produce a human-readable portfolio summary of a POM repo. Read-only.
 
 **Format:** plain text, < 80 columns, copy-pasteable into stakeholder updates. No ANSI color, no HTML.
 
-**Read-only.** Never modifies the target repo.
+**Diff mode (`--since=<date|last>`):** Adds a `CHANGES SINCE` section showing promotions, new dispositions/ADRs/decisions, Discovery gate advances, and Trio/Pod changes between the baseline and now. Writes a fresh snapshot to `.pom/snapshots/<ISO-timestamp>.json` for the next diff. Snapshots ARE committed to git — they're the portfolio's heartbeat.
+
+**Read-only on artifacts.** Never modifies any UC, DISP, DISC, PB, ADR, DEC, pod, product, platform, or enabling file. The only allowed write is `.pom/snapshots/*.json`, and only when `--since` is set.
 
 **After this command:** Use the output as a status update. For structural integrity, run `/pom-validate`.
 </objective>

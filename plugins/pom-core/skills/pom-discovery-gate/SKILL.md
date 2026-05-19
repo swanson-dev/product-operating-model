@@ -33,6 +33,8 @@ Walk a Discovery item through the four-question gate (per `four-question-gate.md
 - Critical-path unblock sequence
 - Shaping log (append-only)
 
+**Emits** a paste-ready stakeholder summary in the CLI report — one paragraph for Teams/email/PR comments naming the gate result, open questions, and the next blocker.
+
 **Refuses** to promote items — promotion is `pom-promote-to-backlog`'s job.
 
 **After this command:**

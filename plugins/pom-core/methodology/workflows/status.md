@@ -11,6 +11,7 @@ Parse:
 - First positional: `$TARGET_DIR` (optional, defaults to cwd)
 - `--product=<slug>` (optional) — scope to a single product
 - `--recent=<N>` (optional, default 5) — number of recent items in lists
+- `--since=<date|last>` (optional) — diff mode. `<date>` is ISO 8601 (`YYYY-MM-DD`); `last` resolves to the newest snapshot under `.pom/snapshots/`. When set, the report includes a CHANGES SINCE section and a fresh snapshot is written at the end of the run.
 </step>
 
 <step name="precondition_checks">
@@ -55,6 +56,81 @@ For each subdirectory in `$TARGET_DIR/enabling/` (excluding `README.md`):
 For each canonical area (and any custom area):
 - Count services (subdirs of the area, excluding `_service-template`)
 - Note status of each (read each service's README for the Status field)
+</step>
+
+<step name="snapshot_current_state">
+**Only runs when `--since` is set.**
+
+Build an in-memory snapshot of current portfolio state:
+
+```json
+{
+  "taken_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "target": "$TARGET_DIR",
+  "artifacts": [
+    {
+      "id": "UC-0042",
+      "type": "UC",
+      "path": "intake/use-case-backlog/UC-0042-...md",
+      "status": "scored",
+      "created_at": "YYYY-MM-DD",
+      "owners": ["J. Park"],
+      "extra": { "wsjf": 21 }
+    },
+    {
+      "id": "DISC-2026-05-claims-doc-ai",
+      "type": "DISC",
+      "path": "products/claims/discovery-backlog/...md",
+      "status": "Q1✅/Q2🟡/Q3✅/Q4✅",
+      "verdict": "NOT READY",
+      "blocker": "actuarial sign-off",
+      "owners": ["M. Park", "J. Lee", "D. Chen"],
+      "created_at": "YYYY-MM-DD"
+    }
+    // ... one entry per UC / DISP / DISC / PB / ADR / DEC / pod / product
+  ]
+}
+```
+
+Use the same parsing logic as `pom-explain` so the two skills agree on field names and shapes.
+
+Hold the snapshot in memory through this run; do not write it yet (write happens after the diff so a failed diff doesn't leave a partial snapshot).
+</step>
+
+<step name="resolve_baseline">
+**Only runs when `--since` is set.**
+
+Resolve `--since` to a baseline snapshot:
+
+- If `--since=last`:
+  - Glob `.pom/snapshots/*.json`. Pick the newest by filename (filenames are ISO timestamps, so lexicographic = chronological).
+  - If none exist: report "No prior snapshot found. This run will write the first snapshot — no diff to show this time." Skip `compute_diff`. Still write the snapshot at the end.
+- If `--since=YYYY-MM-DD`:
+  - Glob `.pom/snapshots/*.json`. Pick the newest snapshot whose `taken_at` is `<= YYYY-MM-DDT23:59:59Z`.
+  - If none qualifies (every snapshot is newer than the requested date): treat the same as "no baseline" — report "No snapshot exists on or before YYYY-MM-DD. Skipping diff this run." and skip `compute_diff`. Never silently diff against a future-of-requested-date baseline (that would hide real changes between the requested date and the chosen later baseline).
+  - If no snapshots exist at all: report and skip diff (same as `--since=last` empty case).
+
+Load the chosen baseline snapshot from disk.
+</step>
+
+<step name="compute_diff">
+**Only runs when `--since` is set AND a baseline was resolved.**
+
+Compute the artifact-level diff between baseline and current:
+
+- **Added**: artifact ID in current but not in baseline. Bucket by type.
+- **Removed**: artifact ID in baseline but not in current. (Rare — usually means a UC was renamed or a snapshot was taken mid-edit. Report as "removed/renamed" with the baseline path.)
+- **Changed**: artifact ID in both, but `status` / `verdict` / `blocker` / `owners` differ. Report old → new for the changed fields.
+- **Unchanged**: skip silently.
+
+Group changes into stakeholder-meaningful events:
+- `Promoted to Product Backlog` (DISC `verdict` flipped to READY → new PB exists with cross-ref)
+- `Disposition recorded` (UC `status` flipped + new DISP added)
+- `Discovery gate advanced` (DISC Q-state changed)
+- `New ADR` (ADR type added)
+- `New decision logged` (DEC type added)
+- `Pod composition changed` (pod artifact `owners` differs)
+- `Trio updated` (product `owners` differs)
 </step>
 
 <step name="detect_blockers">
@@ -111,6 +187,27 @@ OPEN BLOCKERS
   • {{N}} Proposed ADR(s) awaiting decision
   • {{N}} enabling concern(s) at v0.1 scaffold (awaiting authoritative policy)
 
+{{If --since was set AND a baseline existed:}}
+CHANGES SINCE {{baseline taken_at}}
+  Added:
+    • {{count}} new UC(s){{ — list IDs if ≤ 5}}
+    • {{count}} new disposition(s){{ — list if ≤ 5}}
+    • {{count}} new ADR(s){{ — list if ≤ 5}}
+    • {{count}} new decision(s){{ — list if ≤ 5}}
+    • {{count}} new PB item(s){{ — list if ≤ 5}}
+  Promotions:
+    • {{DISC-ID}} → PB-... ({{product}})
+    ...
+  Discovery gate advanced:
+    • {{DISC-ID}}: {{old states}} → {{new states}}
+    ...
+  Other changes:
+    • {{Pod composition / Trio / ADR status changes}}
+    ...
+  Removed / renamed:
+    • {{baseline path}} no longer present (likely renamed)
+    ...
+
 ─────────────────────────────────────────────
 ```
 </step>
@@ -164,6 +261,26 @@ OPEN BLOCKERS (product-scoped)
 ```
 </step>
 
+<step name="write_snapshot">
+**Only runs when `--since` was set.**
+
+Ensure `$TARGET_DIR/.pom/snapshots/` exists (create both `.pom/` and `snapshots/` if missing).
+
+Write the in-memory snapshot from `snapshot_current_state` to:
+```
+$TARGET_DIR/.pom/snapshots/{{taken_at-as-ISO-with-colons-replaced-by-dashes}}.json
+```
+
+Filename example: `2026-05-19T14-32-07Z.json`. (Colons replaced with dashes for cross-platform filename safety.)
+
+Pretty-print JSON (2-space indent) so diffs are git-friendly. Snapshots ARE meant to be committed — they're the portfolio's heartbeat.
+
+After write, print one line to the report:
+```
+Snapshot written: .pom/snapshots/<filename>
+```
+</step>
+
 <step name="report">
 Print the rendered summary directly (no further commentary). The output IS the report.
 
@@ -176,17 +293,20 @@ Otherwise end with:
 ```
 Run `/pom-status $TARGET_DIR --product=<slug>` for product-scoped detail.
 Run `/pom-validate $TARGET_DIR` for structural conformance check.
+Run `/pom-status $TARGET_DIR --since=last` to see what changed since the last snapshot.
 ```
 </step>
 
 </process>
 
 <guardrails>
-- **READ-ONLY.** Never modifies the target repo.
+- **READ-ONLY on portfolio artifacts.** Never modifies any UC, DISP, DISC, PB, ADR, DEC, pod, product, platform, or enabling-concern file.
+- **`.pom/` metadata is the ONLY allowed write target**, and only when `--since` is set. Snapshots are portfolio heartbeats — committed to git intentionally.
 - Counts must be derived from filesystem, not invented.
 - Open blockers must point to real files / states, not fabricated.
 - Output is plain text — no ANSI color, no HTML, < 80 columns wide.
 - If a section has zero items, render "(none)" rather than omitting the section — readers expect consistent shape.
+- The `CHANGES SINCE` section only appears when `--since` was set AND a baseline snapshot existed. The first `--since=last` run writes a snapshot but cannot diff.
 </guardrails>
 
 <success_criteria>
@@ -194,5 +314,7 @@ Run `/pom-validate $TARGET_DIR` for structural conformance check.
 - [ ] Recent items list reflects actual most-recent files
 - [ ] Open blockers correspond to real states
 - [ ] Format is copy-pasteable into a status update
-- [ ] No modifications to target repo
+- [ ] No modifications to portfolio artifacts (only `.pom/snapshots/` when `--since` is used)
+- [ ] When `--since` is set: a snapshot is written; the CHANGES SINCE section is rendered if a baseline existed
+- [ ] Snapshot JSON is pretty-printed (2-space indent) for git-friendly diffs
 </success_criteria>

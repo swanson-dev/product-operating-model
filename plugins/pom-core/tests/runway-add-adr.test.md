@@ -12,10 +12,12 @@
 - Writes `products/claims/runway/ADR-0001-ml-serving-platform-choice.md` with all sections filled per `ADR-template.md`.
 - If `products/claims/runway/runway-plan.md` exists, updates the "Recent decisions" table to reference the new ADR.
 - Reports: ADR file path; suggests `/pom-runway-plan claims` to refresh the runway plan if not already up to date.
+- **Paste-ready decision summary** in the CLI report, framed by dashed lines, that states chosen option + rationale + top trade-off.
 
 **Pressure points:**
 - If skill skips the "considered options" section → FAIL (ADR template requires ≥ 2 options)
 - If skill writes ADR-0002 without ADR-0001 existing → FAIL (R4.2 contiguous numbering)
+- If skill omits the paste-ready decision summary → FAIL (v0.2 requirement)
 
 ---
 
