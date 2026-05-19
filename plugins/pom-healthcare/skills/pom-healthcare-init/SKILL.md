@@ -31,7 +31,14 @@ Install the healthcare overlay into an existing POM repo.
 <process>
 
 <step name="pre_flight">
-Resolve `<pom-repo-path>`; verify POM repo (`intake/`, `products/`, `methodology/`). Abort with `Not a POM repo. Run /pom-bootstrap first.` if not.
+Resolve `<pom-repo-path>` (the required positional argument).
+
+To verify it's a POM repo, use the **Glob tool** (not Bash conditionals — Bash on Windows runs Git Bash POSIX and PowerShell-style `Test-Path { }` syntax will fail). Run these Glob calls:
+- `<pom-repo-path>/intake/` — must match
+- `<pom-repo-path>/products/` — must match
+- `<pom-repo-path>/methodology/` — must match
+
+If any does not match, abort with: `Not a POM repo. Run /pom-bootstrap first.`
 </step>
 
 <step name="run_interview">

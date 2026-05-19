@@ -32,7 +32,11 @@ Install the fintech overlay shipped with this plugin into an existing POM repo. 
 
 <step name="pre_flight">
 1. Resolve `<pom-repo-path>` (required positional). Abort if missing.
-2. Verify POM repo structure (`intake/`, `products/`, `methodology/`). Abort with `Not a POM repo. Run /pom-bootstrap first.` if not.
+2. Verify POM repo structure via the **Glob tool** (do NOT use Bash conditionals — Bash on Windows is Git Bash POSIX and PowerShell `Test-Path { }` syntax will fail). Glob each:
+   - `<pom-repo-path>/intake/`
+   - `<pom-repo-path>/products/`
+   - `<pom-repo-path>/methodology/`
+   If any does not match, abort with `Not a POM repo. Run /pom-bootstrap first.`
 </step>
 
 <step name="run_interview">
