@@ -57,7 +57,7 @@ Check if `enabling/$CONCERN/` exists:
 </step>
 
 <step name="check_template_availability">
-Check if `the pom-core plugin's methodology/templates/enabling/$CONCERN/` exists.
+Check if `the pom-core plugin's methodology/templates/enabling-standards/$CONCERN/` exists.
 
 - **Yes** → Set `$MODE = "full"`. The full template will be copied.
 - **No** → Set `$MODE = "generic"`. A minimal scaffold will be generated.
@@ -66,7 +66,7 @@ Check if `the pom-core plugin's methodology/templates/enabling/$CONCERN/` exists
 <step name="seed_full_template">
 If `$MODE = "full"`:
 
-Copy `the pom-core plugin's methodology/templates/enabling/$CONCERN/` → `enabling/$CONCERN/`. Preserve subfolder structure:
+Copy `the pom-core plugin's methodology/templates/enabling-standards/$CONCERN/` → `enabling/$CONCERN/`. Preserve subfolder structure:
 - `README.md`
 - Concern-specific standards files (e.g., for `ai-ethics`: `model-card-template.md`, `pii-handling.md`, `bias-audit-framework.md`)
 - `decision-log/README.md`
@@ -111,7 +111,7 @@ These standards (when written) are scaffolding. The authoritative versions of or
 - **On material regulatory change** — review whether scaffolding needs updating.
 ```
 
-Create `enabling/$CONCERN/decision-log/README.md` — copy verbatim from `the pom-core plugin's methodology/templates/enabling/ai-ethics/decision-log/README.md`.
+Create `enabling/$CONCERN/decision-log/README.md` — copy verbatim from `the pom-core plugin's methodology/templates/enabling-standards/ai-ethics/decision-log/README.md`.
 
 Then use `AskUserQuestion` to ask the user:
 - **Generate stub standards files** (empty `checklist.md`, `framework.md` with section headers but no content) for the team to populate later?

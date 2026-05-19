@@ -3,7 +3,15 @@
 All notable changes to the **product-operating-model** marketplace are recorded here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follow [SemVer](https://semver.org/).
 
-## [Unreleased] — v0.3 in progress
+## [Unreleased] — v0.4 in progress
+
+### Fixed
+- **`pom-bootstrap` no longer leaks a partial `ai-ethics/` scaffold into new portfolios.** The bootstrap workflow's explicit guardrail ("do NOT seed any enabling concerns automatically — that's `pom-seed-enabling-standard`'s job") was being violated by implementations doing `cp -r methodology/templates/enabling/` because the `ai-ethics/` subtree co-habited that directory. Fix is structural: moved `methodology/templates/enabling/ai-ethics/` → `methodology/templates/enabling-standards/ai-ethics/` so the two concepts ("scaffold-on-bootstrap" vs "seed-on-demand") have separate namespaces and a naive recursive copy cannot leak. `pom-seed-enabling-standard` reads from the new location; `pom-bootstrap` only ever touches `methodology/templates/enabling/README.md`. New scenario E in `tests/bootstrap.test.md` locks the contract: post-bootstrap, `enabling/` must contain exactly one entry (`README.md`).
+
+### Migration
+- **If your existing POM repo was bootstrapped before this fix and contains an unauthored `enabling/ai-ethics/` directory** (model card template, bias audit framework, PII handling, decision-log/README) that your team never opted into via `/pom-seed-enabling-standard --concern=ai-ethics`: delete it (`rm -rf enabling/ai-ethics/`). If your portfolio genuinely needs the AI-ethics enabling standard, re-seed via `/pom-seed-enabling-standard --concern=ai-ethics` so the calibration date in the README reflects your team's adoption, not the leaked bootstrap date. No POM artifact (UC, DISP, DISC, PB, ADR, DEC) references `enabling/ai-ethics/` content by file path — only by concern slug — so the deletion does not orphan any artifact references. The validator (R6.x) does not require `enabling/ai-ethics/` to exist; it only requires each *present* concern directory to have `README.md + decision-log/`.
+
+## [0.3.0] — 2026-05-19
 
 ### Added
 - **`/pom-council` skill — parallel multi-role consultation on draft Discovery items.** Dispatches `pom-trio` for each role (default: PM/PD/TL; opt-in to add SM/PO via `--roles=all` or explicit list) in parallel, all under the new `council_mode: true` input contract that returns structured JSON (per-question confidence high/medium/low + ≤750-char rationale + optional open question). Then dispatches the new `pom-council-synthesizer` agent, which is guardrailed against softening disagreements and forbidden from emitting verdict tokens (✅/🟡/❌/"should promote"/etc.). Output is a single timestamped markdown file `<disc-slug>.council-<ISO-ts>.md` co-located with the parent DISC, containing a Tension Map table (per-question role confidences side-by-side, outlier auto-bolded), synthesis prose, per-role detail in canonical order, and a paste-ready stakeholder block. Multiple runs stacked append-only; the orchestrator handles same-second collisions by appending `-2`, `-3` to the timestamp suffix. Strictly consultative — Council never grades, gates, or emits work-item-shaped artifacts. Test contract in `tests/council.test.md` (15 scenarios) plus the spec at `docs/superpowers/specs/2026-05-19-pom-council-design.md`.
