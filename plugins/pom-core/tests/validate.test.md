@@ -103,7 +103,7 @@
 
 **Invocation:** `/pom-validate`
 
-**Expected outcome:** Validator emits **WARN** (not ERROR) with rule ID `R3.12` and message: `"DISC promoted to 4/4 ✅ without any Council run; consider /pom-council before promotion"`. Validator exit code remains 0 (WARNs are non-blocking).
+**Expected outcome:** Validator emits **WARN** (not ERROR) with rule ID `R3.12` and message: `"DISC <DISC-ID> promoted to 4/4 ✅ without any Council run; consider /pom-council before promotion"` (with `<DISC-ID>` interpolated, e.g. `DISC-2026-05-baz`). Validator exit code remains 0 (WARNs are non-blocking).
 
 **Pressure points:** Validator emits ERROR instead of WARN → FAIL (Council is consultative, not gating — verdict authority must remain with `pom-discovery-gate`).
 
