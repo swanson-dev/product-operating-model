@@ -1,0 +1,27 @@
+{
+  "name": "pom-core",
+  "version": "0.1.0",
+  "description": "Operate a Product Operating Model portfolio — intake, four-question Discovery gate, WSJF scoring, product/platform/enabling layers, runway management, and structural validation. Generic industry baseline included; industry-specific overlays available as separate add-on plugins.",
+  "author": {
+    "name": "Josh Swanson",
+    "email": "swansoncreativestudios@gmail.com",
+    "url": "https://github.com/swansoncreativestudios"
+  },
+  "homepage": "https://github.com/swansoncreativestudios/product-operating-model",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/swansoncreativestudios/product-operating-model.git",
+    "directory": "plugins/pom-core"
+  },
+  "license": "MIT",
+  "keywords": [
+    "pom",
+    "product-operating-model",
+    "wsjf",
+    "discovery-gate",
+    "portfolio",
+    "product-management",
+    "platform-engineering",
+    "governance"
+  ]
+}
